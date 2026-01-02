@@ -15,17 +15,25 @@ namespace Simple_Game_Store_WEB_API
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+
 
             List<GameDTO> games =
             [
@@ -38,6 +46,8 @@ namespace Simple_Game_Store_WEB_API
                 new GameDTO(7, "Silent Hill 2 Remake", "Horror-Adventure" ,29.99m, new DateOnly(2024, 10, 8))
             ];
 
+
+            app.MapGet("games", () => games);
 
 
             app.Run();
