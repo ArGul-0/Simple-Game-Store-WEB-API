@@ -1,5 +1,5 @@
-
 using Simple_Game_Store_WEB_API.DTOs;
+using Microsoft.OpenApi;
 
 namespace Simple_Game_Store_WEB_API
 {
@@ -16,7 +16,15 @@ namespace Simple_Game_Store_WEB_API
             builder.Services.AddOpenApi();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Simple Game Store WEB-API",
+                    Description = "A Simple Game Store WEB-API Created On ASP.NET Core"
+                });
+            });
 
             var app = builder.Build();
 
@@ -26,7 +34,11 @@ namespace Simple_Game_Store_WEB_API
                 app.MapOpenApi();
 
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
@@ -46,8 +58,7 @@ namespace Simple_Game_Store_WEB_API
                 new GameDTO(7, "Silent Hill 2 Remake", "Horror-Adventure" ,29.99m, new DateOnly(2024, 10, 8))
             ];
 
-
-            app.MapGet("games", () => games);
+            app.MapGet("/Games", () => games);
 
 
             app.Run();
