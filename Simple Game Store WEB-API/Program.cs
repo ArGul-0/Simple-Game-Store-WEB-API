@@ -27,13 +27,15 @@ namespace Simple_Game_Store_WEB_API
 
             app.UseAuthorization();
 
-            List<GameDTO> games = 
+            List<GameDTO> games =
             [
-                new GameDTO(1, "Civilization VI", "4X", 59.99m, new DateOnly(2016, 10, 21)),
-                new GameDTO(2, "Stellaris", "4X", 39.99m, new DateOnly(2016, 5, 9)),
+                new GameDTO(1, "Gta 5", "Action-Adventure", 59.99m, new DateOnly(2013, 9, 17)),
+                new GameDTO(2, "Watch Dogs 1", "Action-Adventure", 39.99m, new DateOnly(2014, 5, 26)),
                 new GameDTO(3, "Cities: Skylines", "Management", 29.99m, new DateOnly(2015, 3, 10)),
-                new GameDTO(4, "Planet Zoo", "Management", 44.99m, new DateOnly(2019, 11, 5)),
-                new GameDTO(5, "Endless Legend", "4X", 29.99m, new DateOnly(2014, 9, 18))
+                new GameDTO(4, "Fran Bow", "Horror", 4.99m, new DateOnly(2015, 8, 27)),
+                new GameDTO(5, "Cry of Fear", "Horror", 0m, new DateOnly(2013, 4, 25)),
+                new GameDTO(6, "Sally Face", "Adventure", 14.99m, new DateOnly(2016, 8, 16)),
+                new GameDTO(7, "Silent Hill 2 Remake", "Horror-Adventure" ,29.99m, new DateOnly(2024, 10, 8))
             ];
 
 
