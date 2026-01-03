@@ -60,6 +60,12 @@ namespace Simple_Game_Store_WEB_API
 
             app.MapGet("/Games", () => games);
 
+            app.MapGet("/Games/{ID}", (int ID) =>
+            {
+                var game = games.FirstOrDefault(g => g.ID == ID);
+                return game is not null ? Results.Ok(game) : Results.NotFound();
+            });
+
 
             app.Run();
         }
