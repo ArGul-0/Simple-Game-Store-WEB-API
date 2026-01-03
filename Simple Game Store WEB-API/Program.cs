@@ -58,14 +58,33 @@ namespace Simple_Game_Store_WEB_API
                 new GameDTO(7, "Silent Hill 2 Remake", "Horror-Adventure" ,29.99m, new DateOnly(2024, 10, 8))
             ];
 
+            const string GetGameEndpointName = "GetGame";
+
+            // GET All Games
             app.MapGet("/Games", () => games);
 
+            // GET Game
             app.MapGet("/Games/{ID}", (int ID) =>
             {
                 var game = games.FirstOrDefault(g => g.ID == ID);
                 return game is not null ? Results.Ok(game) : Results.NotFound();
-            });
+            }).WithName(GetGameEndpointName);
 
+            // POST Game
+            app.MapPost("/Games", (CreateGameDTO newGame) =>
+            {
+                GameDTO game = new(
+                    games.Count + 1,
+                    newGame.Name,
+                    newGame.Genre,
+                    newGame.Price,
+                    newGame.ReleaseDate
+                    );
+
+                games.Add(game);
+
+                return Results.CreatedAtRoute(GetGameEndpointName, new {ID = game.ID}, game);
+            });
 
             app.Run();
         }
