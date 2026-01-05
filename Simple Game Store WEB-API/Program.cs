@@ -86,6 +86,27 @@ namespace Simple_Game_Store_WEB_API
                 return Results.CreatedAtRoute(GetGameEndpointName, new {ID = game.ID}, game);
             });
 
+            // PUT Game
+            app.MapPut("/Games/{ID}", (int ID, UpdateGameDTO updatedGame) =>
+            {
+                var gameIndex = games.FindIndex(g => g.ID == ID);
+                if (gameIndex == -1)
+                {
+                    return Results.NotFound();
+                }
+
+                GameDTO game = new(
+                    ID,
+                    updatedGame.Name,
+                    updatedGame.Genre,
+                    updatedGame.Price,
+                    updatedGame.ReleaseDate
+                    );
+                games[gameIndex] = game;
+
+                return Results.NoContent();
+            });
+
             app.Run();
         }
     }
