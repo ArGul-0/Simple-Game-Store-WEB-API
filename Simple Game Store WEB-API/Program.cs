@@ -67,6 +67,7 @@ namespace Simple_Game_Store_WEB_API
             app.MapGet("/Games/{ID}", (int ID) =>
             {
                 var game = games.FirstOrDefault(g => g.ID == ID);
+
                 return game is not null ? Results.Ok(game) : Results.NotFound();
             }).WithName(GetGameEndpointName);
 
@@ -90,6 +91,7 @@ namespace Simple_Game_Store_WEB_API
             app.MapPut("/Games/{ID}", (int ID, UpdateGameDTO updatedGame) =>
             {
                 var gameIndex = games.FindIndex(g => g.ID == ID);
+
                 if (gameIndex == -1)
                 {
                     return Results.NotFound();
@@ -111,6 +113,7 @@ namespace Simple_Game_Store_WEB_API
             app.MapDelete("/Games/{ID}", (int ID) =>
             {
                 var gameIndex = games.FindIndex(g => g.ID == ID);
+
                 if (gameIndex == -1)
                 {
                     return Results.NotFound();
