@@ -107,6 +107,20 @@ namespace Simple_Game_Store_WEB_API
                 return Results.NoContent();
             });
 
+            // DELETE Game
+            app.MapDelete("/Games/{ID}", (int ID) =>
+            {
+                var gameIndex = games.FindIndex(g => g.ID == ID);
+                if (gameIndex == -1)
+                {
+                    return Results.NotFound();
+                }
+
+                games.RemoveAt(gameIndex);
+
+                return Results.NoContent();
+            });
+
             app.Run();
         }
     }
