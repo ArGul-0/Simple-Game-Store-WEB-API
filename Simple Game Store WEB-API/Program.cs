@@ -18,8 +18,8 @@ namespace Simple_Game_Store_WEB_API
 
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddValidation();
-            builder.Services.AddProblemDetails();
+            builder.Services.AddValidation(); // Add validation services
+            builder.Services.AddProblemDetails(); // Add Problem Details services
 
             builder.Services.AddSwaggerGen(options =>
             {
