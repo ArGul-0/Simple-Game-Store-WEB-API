@@ -17,13 +17,18 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
         const string GetGameEndpointName = "GetGame";
 
-        public static WebApplication MapGamesEndpoints(this WebApplication app)
+        public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
+            // Create a group for /Games endpoints
+            var gamesGroup = app.MapGroup("/Games");
+
+
+
             // GET All Games
-            app.MapGet("/Games", () => games);
+            gamesGroup.MapGet("/", () => games);
 
             // GET Game
-            app.MapGet("/Games/{ID}", (int ID) =>
+            gamesGroup.MapGet("/{ID}", (int ID) =>
             {
                 var game = games.FirstOrDefault(g => g.ID == ID);
 
@@ -31,7 +36,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetGameEndpointName);
 
             // POST Game
-            app.MapPost("/Games", (CreateGameDTO newGame) =>
+            gamesGroup.MapPost("/", (CreateGameDTO newGame) =>
             {
                 GameDTO game = new(
                     games.Count + 1,
@@ -47,7 +52,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             });
 
             // PUT Game
-            app.MapPut("/Games/{ID}", (int ID, UpdateGameDTO updatedGame) =>
+            gamesGroup.MapPut("/{ID}", (int ID, UpdateGameDTO updatedGame) =>
             {
                 var gameIndex = games.FindIndex(g => g.ID == ID);
 
@@ -69,7 +74,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             });
 
             // DELETE Game
-            app.MapDelete("/Games/{ID}", (int ID) =>
+            gamesGroup.MapDelete("/{ID}", (int ID) =>
             {
                 var gameIndex = games.FindIndex(g => g.ID == ID);
 
@@ -83,7 +88,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 return Results.NoContent();
             });
 
-            return app;
+            return gamesGroup;
         }
     }
 }
