@@ -19,7 +19,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
         public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
-            // Create a group for /Games endpoints
+            // Create a group for /Games endpoints and enable parameter validation
             var gamesGroup = app.MapGroup("/Games");
 
 
@@ -42,8 +42,8 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     games.Count + 1,
                     newGame.Name,
                     newGame.Genre,
-                    newGame.Price,
-                    newGame.ReleaseDate
+                    newGame.Price ?? 0m,
+                    newGame.ReleaseDate ?? DateOnly.MinValue
                     );
 
                 games.Add(game);
@@ -65,8 +65,8 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     ID,
                     updatedGame.Name,
                     updatedGame.Genre,
-                    updatedGame.Price,
-                    updatedGame.ReleaseDate
+                    updatedGame.Price ?? 0m,
+                    updatedGame.ReleaseDate ?? DateOnly.MinValue
                     );
                 games[gameIndex] = game;
 

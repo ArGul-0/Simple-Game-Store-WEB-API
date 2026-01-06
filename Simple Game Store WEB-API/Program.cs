@@ -17,6 +17,10 @@ namespace Simple_Game_Store_WEB_API
             builder.Services.AddOpenApi();
 
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddValidation();
+            builder.Services.AddProblemDetails();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -28,6 +32,8 @@ namespace Simple_Game_Store_WEB_API
             });
 
             var app = builder.Build();
+
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
