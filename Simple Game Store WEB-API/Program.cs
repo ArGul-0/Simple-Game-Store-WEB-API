@@ -1,6 +1,8 @@
 using Simple_Game_Store_WEB_API.DTOs;
 using Microsoft.OpenApi;
 using Simple_Game_Store_WEB_API.Endpoints;
+using Microsoft.EntityFrameworkCore;
+using Simple_Game_Store_WEB_API.Data;
 
 namespace Simple_Game_Store_WEB_API
 {
@@ -20,6 +22,11 @@ namespace Simple_Game_Store_WEB_API
 
             builder.Services.AddValidation(); // Add validation services
             builder.Services.AddProblemDetails(); // Add Problem Details services
+
+            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<GameStoreContext>(options =>
+                options.UseNpgsql(connString));
 
             builder.Services.AddSwaggerGen(options =>
             {
