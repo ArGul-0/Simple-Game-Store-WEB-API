@@ -1,8 +1,7 @@
-using Simple_Game_Store_WEB_API.DTOs;
-using Microsoft.OpenApi;
 using Simple_Game_Store_WEB_API.Endpoints;
-using Microsoft.EntityFrameworkCore;
 using Simple_Game_Store_WEB_API.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 
 namespace Simple_Game_Store_WEB_API
 {
