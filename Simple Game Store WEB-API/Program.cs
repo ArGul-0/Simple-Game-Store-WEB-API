@@ -12,6 +12,8 @@ namespace Simple_Game_Store_WEB_API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 
@@ -38,6 +40,8 @@ namespace Simple_Game_Store_WEB_API
                 });
             });
 
+
+
             var app = builder.Build();
 
 
@@ -62,6 +66,8 @@ namespace Simple_Game_Store_WEB_API
 
 
             app.MapGamesEndpoints();
+
+
 
             app.Run();
         }
