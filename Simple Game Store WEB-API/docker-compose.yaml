@@ -1,0 +1,15 @@
+﻿services:
+  postgres:
+    image: postgres:18.1
+    restart: always
+    environment:
+      POSTGRES_DB: SimpleGameStoreDB
+      POSTGRES_USER: Admin
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - pgdata:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
