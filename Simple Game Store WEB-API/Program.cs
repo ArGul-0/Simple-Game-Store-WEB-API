@@ -12,24 +12,22 @@ namespace Simple_Game_Store_WEB_API
             var builder = WebApplication.CreateBuilder(args);
 
 
+ 
+            builder.Services.AddAuthorization(); // Add services to the container.
 
-            // Add services to the container.
-            builder.Services.AddAuthorization();
+            builder.Services.AddOpenApi(); // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-
-            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddEndpointsApiExplorer(); // Add Endpoints API Explorer services
 
             builder.Services.AddValidation(); // Add validation services
             builder.Services.AddProblemDetails(); // Add Problem Details services
 
-            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connString = builder.Configuration.GetConnectionString("DefaultConnection"); // Get connection string from configuration
 
-            builder.Services.AddDbContext<GameStoreContext>(options =>
+            builder.Services.AddDbContext<GameStoreContext>(options => // Use PostgreSQL database
                 options.UseNpgsql(connString));
 
-            builder.Services.AddSwaggerGen(options =>
+            builder.Services.AddSwaggerGen(options => // Configure Swagger
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -41,34 +39,33 @@ namespace Simple_Game_Store_WEB_API
 
 
 
-            var app = builder.Build();
+            var app = builder.Build(); // Build the application
 
 
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment()) // Enable Swagger in Development environment
             {
                 app.MapOpenApi();
 
                 app.UseSwagger();
-                app.UseSwaggerUI(options =>
+                app.UseSwaggerUI(options => // Configure Swagger UI
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty;
+                    options.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
                 });
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); // Enable HTTPS redirection
 
-            app.UseAuthorization();
-
-
-
-            app.MapGamesEndpoints();
+            app.UseAuthorization(); // Enable Authorization middleware
 
 
 
-            app.Run();
+            app.MapGamesEndpoints(); // Map Games endpoints
+
+
+
+            app.Run(); // Run the application
         }
     }
 }
