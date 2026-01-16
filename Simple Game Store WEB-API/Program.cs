@@ -63,6 +63,8 @@ namespace Simple_Game_Store_WEB_API
 
             app.MapGamesEndpoints(); // Map Games endpoints
 
+            app.MigrateDatabase(); // Apply database migrations
+
 
 
             app.Run(); // Run the application
