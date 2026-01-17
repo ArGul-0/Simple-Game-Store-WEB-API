@@ -1,15 +1,15 @@
 ﻿services:
   postgres:
-    image: postgres:18.1
-    restart: always
+    image: postgres:18.1 # Use the official PostgreSQL image from Docker Hub
+    restart: always # Always restart the container if it stops
     environment:
-      POSTGRES_DB: SimpleGameStoreDB
-      POSTGRES_USER: Admin
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: SimpleGameStoreDB # Set the default database name
+      POSTGRES_USER: Admin # Set the default database user
+      POSTGRES_PASSWORD: 1234 # Set the default database password
     volumes:
-      - pgdata:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql # Persist data in a Docker volume
     ports:
-      - "5432:5432"
+      - "5432:5432" # Map PostgreSQL port to the host
 
 volumes:
-  pgdata:
+  pgdata: # Define a named volume for PostgreSQL data persistence

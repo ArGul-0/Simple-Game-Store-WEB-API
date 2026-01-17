@@ -2,7 +2,7 @@
 
 namespace Simple_Game_Store_WEB_API.DTOs
 {
-    public record class CreateGameDTO(
+    public record class CreateGameDTO( // Record type for creating a game
         [Required][StringLength(50)] string Name,
         [Required][StringLength(25)] string Genre,
         [Required][Range(0, 100)] decimal? Price,

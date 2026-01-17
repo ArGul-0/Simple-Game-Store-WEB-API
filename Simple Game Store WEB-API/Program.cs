@@ -9,10 +9,10 @@ namespace Simple_Game_Store_WEB_API
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(args); // Create a WebApplication builder
 
 
- 
+
             builder.Services.AddAuthorization(); // Add services to the container.
 
             builder.Services.AddOpenApi(); // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -25,11 +25,11 @@ namespace Simple_Game_Store_WEB_API
             var connString = builder.Configuration.GetConnectionString("DefaultConnection"); // Get connection string from configuration
 
             builder.Services.AddDbContext<GameStoreContext>(options => // Use PostgreSQL database
-                options.UseNpgsql(connString));
+                options.UseNpgsql(connString)); // PostgreSQL provider
 
             builder.Services.AddSwaggerGen(options => // Configure Swagger
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo // Define Swagger document
                 {
                     Version = "v1",
                     Title = "Simple Game Store WEB-API",

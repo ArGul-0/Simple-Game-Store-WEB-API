@@ -2,9 +2,9 @@
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
-    public static class GamesEndpoints
+    public static class GamesEndpoints // Static class for Games endpoints
     {
-        private static readonly List<GameDTO> games =
+        private static readonly List<GameDTO> games = // In-memory list of games
         [
             new GameDTO(1, "Gta 5", "Action-Adventure", 59.99m, new DateOnly(2013, 9, 17)),
             new GameDTO(2, "Watch Dogs 1", "Action-Adventure", 39.99m, new DateOnly(2014, 5, 26)),
@@ -15,12 +15,17 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             new GameDTO(7, "Silent Hill 2 Remake", "Horror-Adventure" ,29.99m, new DateOnly(2024, 10, 8))
         ];
 
-        const string GetGameEndpointName = "GetGame";
+        const string GetGameEndpointName = "GetGame"; // Constant for the Get Game endpoint name
 
+        /// <summary>
+        /// Maps the Games endpoints to the WebApplication.
+        /// </summary>
+        /// <remarks>
+        /// This method sets up the following endpoints under the /Games route:
+        /// </remarks>
         public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
-            // Create a group for /Games endpoints
-            var gamesGroup = app.MapGroup("/Games");
+            var gamesGroup = app.MapGroup("/Games"); // Create a group for /Games endpoints
 
 
 
@@ -88,7 +93,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 return Results.NoContent();
             });
 
-            return gamesGroup;
+            return gamesGroup; // Return the group for further configuration if needed
         }
     }
 }
