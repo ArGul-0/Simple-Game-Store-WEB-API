@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Simple_Game_Store_WEB_API.DTOs;
-using Simple_Game_Store_WEB_API.Entities;
+﻿using Simple_Game_Store_WEB_API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Game_Store_WEB_API.Data
 {
