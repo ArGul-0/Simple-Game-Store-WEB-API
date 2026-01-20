@@ -1,8 +1,10 @@
-﻿namespace Simple_Game_Store_WEB_API.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Simple_Game_Store_WEB_API.Entities
 {
     public class Game // Game entity class
     {
-        public int ID { get; set; }
+        /*[Key]*/ /*Maybe lates, idk*/ public int ID { get; set; }
         public required string Name { get; set; }
         public Genre? Genre { get; set; }
         public int GenreID { get; set; }
