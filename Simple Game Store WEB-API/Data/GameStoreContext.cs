@@ -13,6 +13,18 @@ namespace Simple_Game_Store_WEB_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Configure model creation
         {
+            modelBuilder.Entity<Genre>().HasData( // Seed initial data for Genres
+            new Genre { ID = 1, Name = "Action-Adventure" },
+            new Genre { ID = 2, Name = "Management" },
+            new Genre { ID = 3, Name = "RPG" },
+            new Genre { ID = 4, Name = "Simulation" },
+            new Genre { ID = 5, Name = "Strategy" },
+            new Genre { ID = 6, Name = "Sports" },
+            new Genre { ID = 7, Name = "Puzzle" },
+            new Genre { ID = 8, Name = "Horror" },
+            new Genre { ID = 9, Name = "Action" },
+            new Genre { ID = 10, Name = "Adventure" }
+            );
 
             modelBuilder.Entity<Game>().HasData( // Seed initial data for Games
                 new Game
@@ -71,21 +83,6 @@ namespace Simple_Game_Store_WEB_API.Data
                     Price = 29.99m,
                     ReleaseDate = new DateOnly(2024, 10, 8)
                 }
-            );
-
-
-
-            modelBuilder.Entity<Genre>().HasData( // Seed initial data for Genres
-                new Genre { ID = 1, Name = "Action-Adventure" },
-                new Genre { ID = 2, Name = "Management" },
-                new Genre { ID = 3, Name = "RPG" },
-                new Genre { ID = 4, Name = "Simulation" },
-                new Genre { ID = 5, Name = "Strategy" },
-                new Genre { ID = 6, Name = "Sports" },
-                new Genre { ID = 7, Name = "Puzzle" },
-                new Genre { ID = 8, Name = "Horror" },
-                new Genre { ID = 9, Name = "Action" },
-                new Genre { ID = 10, Name = "Adventure" }
             );
         }
     }
