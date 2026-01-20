@@ -48,6 +48,64 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                     b.HasIndex("GenreID");
 
                     b.ToTable("Games");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            GenreID = 1,
+                            Name = "Gta 5",
+                            Price = 59.99m,
+                            ReleaseDate = new DateOnly(2013, 9, 17)
+                        },
+                        new
+                        {
+                            ID = 2,
+                            GenreID = 1,
+                            Name = "Watch Dogs 1",
+                            Price = 39.99m,
+                            ReleaseDate = new DateOnly(2014, 5, 26)
+                        },
+                        new
+                        {
+                            ID = 3,
+                            GenreID = 2,
+                            Name = "Cities: Skylines",
+                            Price = 29.99m,
+                            ReleaseDate = new DateOnly(2015, 3, 10)
+                        },
+                        new
+                        {
+                            ID = 4,
+                            GenreID = 8,
+                            Name = "Fran Bow",
+                            Price = 4.99m,
+                            ReleaseDate = new DateOnly(2015, 8, 27)
+                        },
+                        new
+                        {
+                            ID = 5,
+                            GenreID = 8,
+                            Name = "Cry of Fear",
+                            Price = 0m,
+                            ReleaseDate = new DateOnly(2013, 4, 25)
+                        },
+                        new
+                        {
+                            ID = 6,
+                            GenreID = 10,
+                            Name = "Sally Face",
+                            Price = 14.99m,
+                            ReleaseDate = new DateOnly(2016, 8, 16)
+                        },
+                        new
+                        {
+                            ID = 7,
+                            GenreID = 8,
+                            Name = "Silent Hill 2 Remake",
+                            Price = 29.99m,
+                            ReleaseDate = new DateOnly(2024, 10, 8)
+                        });
                 });
 
             modelBuilder.Entity("Simple_Game_Store_WEB_API.Entities.Genre", b =>
