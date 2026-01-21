@@ -1,6 +1,7 @@
 ﻿using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -21,7 +22,20 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // GET All Games
-            gamesGroup.MapGet("/", (GameStoreContext dbContext) => dbContext.Games.ToList());
+            gamesGroup.MapGet("/", (GameStoreContext dbContext) =>
+            {
+                var games = dbContext.Games
+                    .AsNoTracking().Select(gameDTO => new GameDTO(
+                        gameDTO.ID,
+                        gameDTO.Name,
+                        gameDTO.Genre!.Name,
+                        gameDTO.Price,
+                        gameDTO.ReleaseDate
+                        ))
+                    .ToList();
+
+                return Results.Ok(games);
+            });
 
             // GET Game
             gamesGroup.MapGet("/{ID}", (int ID, GameStoreContext dbContext) =>
