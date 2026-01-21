@@ -12,7 +12,7 @@ using Simple_Game_Store_WEB_API.Data;
 namespace Simple_Game_Store_WEB_API.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    [Migration("20260121124621_SeedGames")]
+    [Migration("20260121130734_SeedGames")]
     partial class SeedGames
     {
         /// <inheritdoc />
