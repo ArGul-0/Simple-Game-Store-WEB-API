@@ -5,7 +5,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
 {
     public class GameMapper : IGameMapper
     {
-        public Game ToEntity(CreateGameDTO createGameDTO)
+        public Game ToEntity(CreateGameDTO createGameDTO) // Converts CreateGameDTO to Game entity
         {
             return new Game
             {
@@ -15,7 +15,8 @@ namespace Simple_Game_Store_WEB_API.Mappers
                 ReleaseDate = createGameDTO.ReleaseDate
             };
         }
-        public GameDTO ToDTO(Game game)
+
+        public GameDTO ToDTO(Game game) // Converts Game entity to GameDTO
         {
             return new GameDTO(
                 ID: game.ID,

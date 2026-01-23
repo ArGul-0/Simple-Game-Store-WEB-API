@@ -38,7 +38,7 @@ namespace Simple_Game_Store_WEB_API
                 });
             });
 
-            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper service
+            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper service, scoped lifetime
 
             var app = builder.Build(); // Build the application
 
