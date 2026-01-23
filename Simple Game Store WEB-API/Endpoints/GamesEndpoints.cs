@@ -1,4 +1,5 @@
 ﻿using Simple_Game_Store_WEB_API.Entities;
+using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -46,29 +47,15 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetGameEndpointName);
 
             // POST Game
-            gamesGroup.MapPost("/", (CreateGameDTO newGame, GameStoreContext dbContext) =>
+            gamesGroup.MapPost("/", (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                var game = new Game
-                {
-                    Name = newGame.Name,
-                    Genre = dbContext.Genres.Find(newGame.GenreID),
-                    GenreID = newGame.GenreID,
-                    Price = newGame.Price,
-                    ReleaseDate = newGame.ReleaseDate
-                };
+                Game game = gameMapper.ToEntity(newGame);
+                game.Genre = dbContext.Genres.Find(newGame.GenreID);
 
                 dbContext.Games.Add(game);
                 dbContext.SaveChanges();
 
-                GameDTO gameDTO = new(
-                    game.ID,
-                    game.Name,
-                    game.Genre!.Name,
-                    game.Price,
-                    game.ReleaseDate
-                    );
-
-                return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameDTO);
+                return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDTO(game));
             });
 
             // PUT Game

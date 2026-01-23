@@ -2,6 +2,7 @@ using Simple_Game_Store_WEB_API.Endpoints;
 using Simple_Game_Store_WEB_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Simple_Game_Store_WEB_API.Mappers;
 
 namespace Simple_Game_Store_WEB_API
 {
@@ -37,7 +38,7 @@ namespace Simple_Game_Store_WEB_API
                 });
             });
 
-
+            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper service
 
             var app = builder.Build(); // Build the application
 
