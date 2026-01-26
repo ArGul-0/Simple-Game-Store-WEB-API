@@ -12,9 +12,9 @@ namespace Simple_Game_Store_WEB_API.Mappers
         public Game ToEntity(CreateGameDTO createGameDTO);
 
         /// <summary>
-        /// Converts Game entity to GameDTO
+        /// Converts Game entity to GameDetailsDTO
         /// </summary>
         /// <returns>GameDTO</returns>
-        public GameSummaryDTO ToDTO(Game game);
+        public GameDetailsDTO ToDTO(Game game);
     }
 }
