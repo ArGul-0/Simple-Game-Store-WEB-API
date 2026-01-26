@@ -1,9 +1,9 @@
 ﻿namespace Simple_Game_Store_WEB_API.DTOs
 {
-    public record class GameDTO( // Record type for Game Data Transfer Object
+    public record class GameDetailsDTO(
         int ID,
         string Name,
-        string Genre,
+        int GenreID,
         decimal Price,
         DateOnly ReleaseDate);
 }

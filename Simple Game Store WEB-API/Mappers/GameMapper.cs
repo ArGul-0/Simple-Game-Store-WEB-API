@@ -16,9 +16,9 @@ namespace Simple_Game_Store_WEB_API.Mappers
             };
         }
 
-        public GameDTO ToDTO(Game game) // Converts Game entity to GameDTO
+        public GameSummaryDTO ToDTO(Game game) // Converts Game entity to GameDTO
         {
-            return new GameDTO(
+            return new GameSummaryDTO(
                 ID: game.ID,
                 Name: game.Name,
                 Genre: game.Genre!.Name,
