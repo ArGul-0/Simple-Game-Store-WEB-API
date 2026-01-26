@@ -1,8 +1,8 @@
 using Simple_Game_Store_WEB_API.Endpoints;
+using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using Simple_Game_Store_WEB_API.Mappers;
 
 namespace Simple_Game_Store_WEB_API
 {
