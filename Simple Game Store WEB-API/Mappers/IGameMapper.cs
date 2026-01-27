@@ -6,13 +6,18 @@ namespace Simple_Game_Store_WEB_API.Mappers
     public interface IGameMapper
     {
         /// <summary>
-        /// Converts CreateGameDTO to Game entity
+        /// Converts CreateGameDTO To Game Entity
         /// </summary>
         /// <returns>Game</returns>
         public Game ToEntity(CreateGameDTO createGameDTO);
+        /// <summary>
+        /// Converts UpdateGameDTO To Game Entity
+        /// </summary>
+        /// <returns></returns>
+        public Game ToEntity(UpdateGameDTO updateGameDTO);
 
         /// <summary>
-        /// Converts Game entity to GameDetailsDTO
+        /// Converts Game Entity To GameDetailsDTO
         /// </summary>
         /// <returns>GameDTO</returns>
         public GameDetailsDTO ToDTO(Game game);

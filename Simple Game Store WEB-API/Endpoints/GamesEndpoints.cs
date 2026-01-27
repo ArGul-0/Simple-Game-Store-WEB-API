@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
-    public static class GamesEndpoints // Static class for Games endpoints
+    public static class GamesEndpoints // Static Class For Games Endpoints
     {
-        const string GetGameEndpointName = "GetGame"; // Constant for the Get Game endpoint name
+        const string GetGameEndpointName = "GetGame"; // Constant For The Get Game Endpoint Name
 
         /// <summary>
-        /// Maps the Games endpoints to the WebApplication.
+        /// Maps The Games Endpoints To The Web Application
         /// </summary>
         /// <remarks>
-        /// This method sets up the following endpoints under the /Games route:
+        /// This Method Sets Up The Following Endpoints Under The /Games Route:
         /// </remarks>
         public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
-            var gamesGroup = app.MapGroup("/Games"); // Create a group for /Games endpoints
+            var gamesGroup = app.MapGroup("/Games"); // Create A group For /Games Endpoints
 
 
 
@@ -53,31 +53,26 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 game.Genre = dbContext.Genres.Find(newGame.GenreID);
 
                 dbContext.Games.Add(game);
+
                 dbContext.SaveChanges();
 
                 return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDTO(game));
             });
 
             // PUT Game
-            gamesGroup.MapPut("/{ID}", (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext) =>
+            gamesGroup.MapPut("/{ID}", (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                var game = dbContext.Games.Find(ID);
+                Game? game = dbContext.Games.AsNoTracking().FirstOrDefault(g => g.ID == ID);
 
                 if (game is null)
-                {
                     return Results.NotFound();
-                }
 
-                game = new Game
-                {
-                    Name = updatedGame.Name,
-                    Genre = dbContext.Genres.Find(updatedGame.GenreID),
-                    GenreID = updatedGame.GenreID,
-                    Price = updatedGame.Price,
-                    ReleaseDate = updatedGame.ReleaseDate
-                };
+                game = gameMapper.ToEntity(updatedGame);
+                game.Genre = dbContext.Genres.Find(updatedGame.GenreID);
+                game.ID = ID;
 
                 dbContext.Games.Update(game);
+
                 dbContext.SaveChanges();
 
                 return Results.NoContent();
@@ -89,17 +84,16 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 var game = dbContext.Games.Find(ID);
 
                 if (game is null)
-                {
                     return Results.NotFound();
-                }
 
                 dbContext.Games.Remove(game);
+
                 dbContext.SaveChanges();
 
                 return Results.NoContent();
             });
 
-            return gamesGroup; // Return the group for further configuration if needed
+            return gamesGroup; // Return The Group For Further Configuration If Needed
         }
     }
 }

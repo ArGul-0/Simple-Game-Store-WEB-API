@@ -5,7 +5,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
 {
     public class GameMapper : IGameMapper
     {
-        public Game ToEntity(CreateGameDTO createGameDTO) // Converts CreateGameDTO to Game entity
+        public Game ToEntity(CreateGameDTO createGameDTO) // Converts CreateGameDTO To Game Entity
         {
             return new Game
             {
@@ -16,7 +16,20 @@ namespace Simple_Game_Store_WEB_API.Mappers
             };
         }
 
-        public GameDetailsDTO ToDTO(Game game) // Converts Game entity to GameDetailsDTO
+        public Game ToEntity(UpdateGameDTO updateGameDTO) // Converts UpdateGameDTO To Game Entity
+        {
+            return new Game
+            {
+                Name = updateGameDTO.Name,
+                GenreID = updateGameDTO.GenreID,
+                Price = updateGameDTO.Price,
+                ReleaseDate = updateGameDTO.ReleaseDate
+            };
+        }
+
+
+
+        public GameDetailsDTO ToDTO(Game game) // Converts Game Entity To GameDetailsDTO
         {
             return new GameDetailsDTO(
                 ID: game.ID,
