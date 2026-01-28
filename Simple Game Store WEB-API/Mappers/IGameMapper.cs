@@ -16,10 +16,17 @@ namespace Simple_Game_Store_WEB_API.Mappers
         /// <returns></returns>
         public Game ToEntity(UpdateGameDTO updateGameDTO);
 
+
+
+        /// <summary>
+        /// Converts Game Entity To GameSummaryDTO
+        /// </summary>
+        /// <returns></returns>
+        public GameSummaryDTO ToSummaryDTO(Game game);
         /// <summary>
         /// Converts Game Entity To GameDetailsDTO
         /// </summary>
         /// <returns>GameDTO</returns>
-        public GameDetailsDTO ToDTO(Game game);
+        public GameDetailsDTO ToDetailsDTO(Game game);
     }
 }

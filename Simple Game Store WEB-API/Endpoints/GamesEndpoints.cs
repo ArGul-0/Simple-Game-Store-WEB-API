@@ -23,16 +23,12 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // GET All Games
-            gamesGroup.MapGet("/", (GameStoreContext dbContext) =>
+            gamesGroup.MapGet("/", (GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 var games = dbContext.Games
-                    .AsNoTracking().Select(gameDTO => new GameSummaryDTO(
-                        gameDTO.ID,
-                        gameDTO.Name,
-                        gameDTO.Genre!.Name,
-                        gameDTO.Price,
-                        gameDTO.ReleaseDate
-                        ))
+                    .AsNoTracking()
+                    .Include(g => g.Genre)
+                    .Select(g => gameMapper.ToSummaryDTO(g))
                     .ToList();
 
                 return Results.Ok(games);
@@ -43,7 +39,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             {
                 Game? game = dbContext.Games.Find(ID);
 
-                return game is not null ? Results.Ok(gameMapper.ToDTO(game)) : Results.NotFound();
+                return game is not null ? Results.Ok(gameMapper.ToDetailsDTO(game)) : Results.NotFound();
             }).WithName(GetGameEndpointName);
 
             // POST Game
@@ -56,7 +52,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                 dbContext.SaveChanges();
 
-                return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDTO(game));
+                return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
             });
 
             // PUT Game
