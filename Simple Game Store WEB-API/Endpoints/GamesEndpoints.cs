@@ -26,7 +26,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             gamesGroup.MapGet("/", (GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 var games = dbContext.Games
-                    .AsNoTracking()
+                    .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
                     .Include(g => g.Genre)
                     .Select(g => gameMapper.ToSummaryDTO(g))
                     .ToList();
@@ -37,7 +37,9 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             // GET Game
             gamesGroup.MapGet("/{ID}", (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                Game? game = dbContext.Games.Find(ID);
+                Game? game = dbContext.Games
+                    .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
+                    .FirstOrDefault(g => g.ID == ID);
 
                 return game is not null ? Results.Ok(gameMapper.ToDetailsDTO(game)) : Results.NotFound();
             }).WithName(GetGameEndpointName);
