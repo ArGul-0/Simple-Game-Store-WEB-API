@@ -79,16 +79,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             // DELETE Game
             gamesGroup.MapDelete("/{ID}", (int ID, GameStoreContext dbContext) =>
             {
-                var game = dbContext.Games.Find(ID);
+                var affected = dbContext.Games
+                .Where(g => g.ID == ID)
+                .ExecuteDelete();
 
-                if (game is null)
-                    return Results.NotFound();
-
-                dbContext.Games.Remove(game);
-
-                dbContext.SaveChanges();
-
-                return Results.NoContent();
+                return affected == 0 ? Results.NotFound() : Results.NoContent();
             });
 
             return gamesGroup; // Return The Group For Further Configuration If Needed
