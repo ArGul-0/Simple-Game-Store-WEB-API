@@ -35,11 +35,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             });
 
             // GET Game
-            gamesGroup.MapGet("/{ID}", (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                Game? game = dbContext.Games
+                Game? game = await dbContext.Games
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
-                    .FirstOrDefault(g => g.ID == ID);
+                    .FirstOrDefaultAsync(g => g.ID == ID);
 
                 return game is not null ? Results.Ok(gameMapper.ToDetailsDTO(game)) : Results.NotFound();
             }).WithName(GetGameEndpointName);
