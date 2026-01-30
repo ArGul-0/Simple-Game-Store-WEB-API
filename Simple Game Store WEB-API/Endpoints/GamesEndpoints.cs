@@ -23,13 +23,13 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // GET All Games
-            gamesGroup.MapGet("/", (GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapGet("/", async (GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                var games = dbContext.Games
+                var games = await dbContext.Games
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
                     .Include(g => g.Genre)
                     .Select(g => gameMapper.ToSummaryDTO(g))
-                    .ToList();
+                    .ToListAsync();
 
                 return Results.Ok(games);
             });
