@@ -45,14 +45,14 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetGameEndpointName);
 
             // POST Game
-            gamesGroup.MapPost("/", (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapPost("/", async (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 Game game = gameMapper.ToEntity(newGame);
-                game.Genre = dbContext.Genres.Find(newGame.GenreID);
+                game.Genre = await dbContext.Genres.FindAsync(newGame.GenreID);
 
                 dbContext.Games.Add(game);
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
             });
