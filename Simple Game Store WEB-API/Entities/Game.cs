@@ -2,7 +2,7 @@
 {
     public class Game // Game entity class
     {
-        /*[Key]*/ /*Maybe later, idk*/ public int ID { get; set; }
+        public int ID { get; set; }
         public required string Name { get; set; }
         public Genre? Genre { get; set; }
         public int GenreID { get; set; }
