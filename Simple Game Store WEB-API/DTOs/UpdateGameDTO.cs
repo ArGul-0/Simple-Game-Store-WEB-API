@@ -2,7 +2,7 @@
 
 namespace Simple_Game_Store_WEB_API.DTOs
 {
-    public record class UpdateGameDTO( // Record type for updating a game
+    public record class UpdateGameDTO( // Data Transfer Object For Updating An Existing Game
         [Required][StringLength(50)] string Name,
         [Required][Range(1, int.MaxValue)] int GenreID,
         [Required][Range(0, 100)] decimal Price,
