@@ -58,20 +58,20 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             });
 
             // PUT Game
-            gamesGroup.MapPut("/{ID}", (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                Game? game = dbContext.Games.AsNoTracking().FirstOrDefault(g => g.ID == ID);
+                Game? game = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
 
                 if (game is null)
                     return Results.NotFound();
 
                 game = gameMapper.ToEntity(updatedGame);
-                game.Genre = dbContext.Genres.Find(updatedGame.GenreID);
+                game.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
                 game.ID = ID;
 
                 dbContext.Games.Update(game);
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
             });
