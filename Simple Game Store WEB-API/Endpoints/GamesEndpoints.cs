@@ -3,6 +3,7 @@ using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Simple_Game_Store_WEB_API.Validators;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -55,7 +56,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
-            });
+            }).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>(); // Add Validation Filter
 
             // PUT Game
             gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
@@ -74,7 +75,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
-            });
+            }).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>(); // Add Validation Filter
 
             // DELETE Game
             gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>

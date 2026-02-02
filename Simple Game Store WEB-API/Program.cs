@@ -1,36 +1,41 @@
+using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Endpoints;
 using Simple_Game_Store_WEB_API.Mappers;
+using Simple_Game_Store_WEB_API.DTOs;
 using Simple_Game_Store_WEB_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using FluentValidation;
 
 namespace Simple_Game_Store_WEB_API
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async Task Main(string[] args) // Main Method - Application Entry Point
         {
-            var builder = WebApplication.CreateBuilder(args); // Create a WebApplication builder
+            var builder = WebApplication.CreateBuilder(args); // Create A WebApplication Builder
 
 
 
-            builder.Services.AddAuthorization(); // Add services to the container.
+            builder.Services.AddAuthorization(); // Add Services To The Container.
 
-            builder.Services.AddOpenApi(); // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddOpenApi(); // Learn More About Configuring OpenAPI At https://aka.ms/aspnet/openapi
 
-            builder.Services.AddEndpointsApiExplorer(); // Add Endpoints API Explorer services
+            builder.Services.AddEndpointsApiExplorer(); // Add Endpoints API Explorer Services
 
             builder.Services.AddValidation(); // Add validation services
             builder.Services.AddProblemDetails(); // Add Problem Details services
+            builder.Services.AddScoped<IValidator<CreateGameDTO>, CreateGameDTOValidator>(); // Register CreateGameDTO Validator, NuGet FluentValidation Package
+            builder.Services.AddScoped<IValidator<UpdateGameDTO>, UpdateGameDTOValidator>(); // Register UpdateGameDTO Validator, NuGet FluentValidation Package
 
-            var connString = builder.Configuration.GetConnectionString("DefaultConnection"); // Get connection string from configuration
+            var connString = builder.Configuration.GetConnectionString("DefaultConnection"); // Get Connection String From Configuration
 
-            builder.Services.AddDbContext<GameStoreContext>(options => // Use PostgreSQL database
+            builder.Services.AddDbContext<GameStoreContext>(options => // Use PostgreSQL Database
                 options.UseNpgsql(connString)); // PostgreSQL provider
 
             builder.Services.AddSwaggerGen(options => // Configure Swagger
             {
-                options.SwaggerDoc("v1", new OpenApiInfo // Define Swagger document
+                options.SwaggerDoc("v1", new OpenApiInfo // Define Swagger Document
                 {
                     Version = "v1",
                     Title = "Simple Game Store WEB-API",
