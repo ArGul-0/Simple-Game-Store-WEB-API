@@ -16,6 +16,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         /// </summary>
         /// <remarks>
         /// This Method Sets Up The Following Endpoints Under The /Games Route:
+        /// - GET /Games: Retrieve All Games
+        /// - GET /Games/{ID}: Retrieve A Specific Game By ID
+        /// - POST /Games: Create A New Game
+        /// - PUT /Games/{ID}: Update An Existing Game
+        /// - DELETE /Games/{ID}: Delete A Game
         /// </remarks>
         public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
