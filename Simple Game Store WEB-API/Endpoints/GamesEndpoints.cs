@@ -77,11 +77,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             });
 
             // DELETE Game
-            gamesGroup.MapDelete("/{ID}", (int ID, GameStoreContext dbContext) =>
+            gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
             {
-                var affected = dbContext.Games
+                var affected = await dbContext.Games
                 .Where(g => g.ID == ID)
-                .ExecuteDelete();
+                .ExecuteDeleteAsync();
 
                 return affected == 0 ? Results.NotFound() : Results.NoContent();
             });
