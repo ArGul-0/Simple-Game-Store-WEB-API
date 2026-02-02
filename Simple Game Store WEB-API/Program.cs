@@ -8,7 +8,7 @@ namespace Simple_Game_Store_WEB_API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args); // Create a WebApplication builder
 
@@ -64,7 +64,7 @@ namespace Simple_Game_Store_WEB_API
 
             app.MapGamesEndpoints(); // Map Games endpoints
 
-            app.MigrateDatabase(); // Apply database migrations
+            await app.MigrateDatabaseAsync(); // Apply database migrations
 
 
 
