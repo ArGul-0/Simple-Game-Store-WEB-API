@@ -43,13 +43,14 @@ namespace Simple_Game_Store_WEB_API
                 });
             });
 
-            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper service, scoped lifetime
+            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper Service, Scoped lifetime
+            builder.Services.AddScoped<IGenreMapper, GenreMapper>(); // Register GenreMapper Service, Scoped lifetime
 
             var app = builder.Build(); // Build the application
 
 
 
-            if (app.Environment.IsDevelopment()) // Enable Swagger in Development environment
+            if (app.Environment.IsDevelopment()) // Enable Swagger In Development Environment
             {
                 app.MapOpenApi();
 
@@ -57,7 +58,7 @@ namespace Simple_Game_Store_WEB_API
                 app.UseSwaggerUI(options => // Configure Swagger UI
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+                    options.RoutePrefix = string.Empty; // Set Swagger UI At The App's Root
                 });
             }
 
