@@ -8,8 +8,6 @@
       POSTGRES_PASSWORD: 1234 # Set The Default Database Password
     volumes:
       - pgdata:/var/lib/postgresql # Persist Data In A Docker Volume
-    ports:
-      - "5432:5432" # Map PostgreSQL Port To The Host
 
   api:
     build:
@@ -17,7 +15,7 @@
       dockerfile: Dockerfile # Use The Specified Dockerfile
     restart: always # Always Restart The Container If It Stops
     environment:
-      ASPNETCORE_ENVIRONMENT: Production # Set The ASP.NET Core Environment To Production
+      ASPNETCORE_ENVIRONMENT: Development # Set The ASP.NET Core Environment To Production
       ASPNETCORE_URLS: "http://+:80" # Configure The API To Listen On Port 80
       ConnectionStrings__DefaultConnection: Host=postgres;Database=SimpleGameStoreDB;Username=Admin;Password=1234 # Database Connection String
     depends_on:
