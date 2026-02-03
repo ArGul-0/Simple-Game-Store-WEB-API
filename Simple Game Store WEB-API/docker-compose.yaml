@@ -1,15 +1,28 @@
 ﻿services:
   postgres:
-    image: postgres:18.1 # Use the official PostgreSQL image from Docker Hub
-    restart: always # Always restart the container if it stops
+    image: postgres:18.1 # Use The Official PostgreSQL Image From Docker Hub
+    restart: always # Always Restart The Container If It Stops
     environment:
-      POSTGRES_DB: SimpleGameStoreDB # Set the default database name
-      POSTGRES_USER: Admin # Set the default database user
-      POSTGRES_PASSWORD: 1234 # Set the default database password
+      POSTGRES_DB: SimpleGameStoreDB # Set The Default Database Name
+      POSTGRES_USER: Admin # Set The Default Database User
+      POSTGRES_PASSWORD: 1234 # Set The Default Database Password
     volumes:
-      - pgdata:/var/lib/postgresql # Persist data in a Docker volume
+      - pgdata:/var/lib/postgresql # Persist Data In A Docker Volume
     ports:
-      - "5432:5432" # Map PostgreSQL port to the host
+      - "5432:5432" # Map PostgreSQL Port To The Host
+
+  api:
+    build:
+      context: . # Build The API Service From The Current Directory
+      dockerfile: Dockerfile # Use The Specified Dockerfile
+    restart: always # Always Restart The Container If It Stops
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development # Set The ASP.NET Core Environment To Development
+      ConnectionStrings__DefaultConnection: Host=postgres;Database=SimpleGameStoreDB;Username=Admin;Password=1234 # Database Connection String
+    depends_on:
+      - postgres # Ensure The API Service Starts After The PostgreSQL Service
+
+
 
 volumes:
-  pgdata: # Define a named volume for PostgreSQL data persistence
+  pgdata: # Define A Named Volume For PostgreSQL Data Persistence
