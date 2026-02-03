@@ -13,7 +13,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
         /// <summary>
         /// Converts UpdateGameDTO To Game Entity
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Game</returns>
         public Game ToEntity(UpdateGameDTO updateGameDTO);
 
 
@@ -21,12 +21,12 @@ namespace Simple_Game_Store_WEB_API.Mappers
         /// <summary>
         /// Converts Game Entity To GameSummaryDTO
         /// </summary>
-        /// <returns></returns>
+        /// <returns>GameSummaryDTO</returns>
         public GameSummaryDTO ToSummaryDTO(Game game);
         /// <summary>
         /// Converts Game Entity To GameDetailsDTO
         /// </summary>
-        /// <returns>GameDTO</returns>
+        /// <returns>GameDetailsDTO</returns>
         public GameDetailsDTO ToDetailsDTO(Game game);
     }
 }
