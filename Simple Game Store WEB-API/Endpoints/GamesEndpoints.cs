@@ -1,9 +1,9 @@
-﻿using Simple_Game_Store_WEB_API.Entities;
+﻿using Simple_Game_Store_WEB_API.Validators;
+using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Simple_Game_Store_WEB_API.Validators;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
