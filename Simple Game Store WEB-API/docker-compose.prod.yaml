@@ -15,16 +15,15 @@
       timeout: 5s # Timeout After 5 Seconds
 
   api:
-    build:
-      context: . # Build The API Service From The Current Directory
-      dockerfile: Dockerfile # Use The Specified Dockerfile
+    image: argul0/simple-game-store:simple-game-store-web-api-1.0.0-pre-release-test # Use The Published Docker Image From Docker Hub For Current Version
     restart: always # Always Restart The Container If It Stops
     environment:
       ASPNETCORE_ENVIRONMENT: Production # Set The ASP.NET Core Environment To Production
       ASPNETCORE_URLS: "http://+:80" # Configure The API To Listen On Port 80
       ConnectionStrings__DefaultConnection: Host=postgres;Database=SimpleGameStoreDB;Username=Admin;Password=1234 # Database Connection String
     depends_on:
-      - postgres # Ensure The API Service Starts After The PostgreSQL Service
+      postgres:
+          condition: service_healthy # Ensure The API Starts Only After PostgreSQL Is Healthy
     ports:
       - "5000:80" # Map API Port To The Host
     healthcheck:
