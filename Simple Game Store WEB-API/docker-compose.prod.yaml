@@ -8,6 +8,11 @@
       POSTGRES_PASSWORD: 1234 # Set The Default Database Password
     volumes:
       - pgdata:/var/lib/postgresql # Persist Data In A Docker Volume
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U Admin -d SimpleGameStoreDB"] # Check If PostgreSQL Is Ready To Accept Connections
+      interval: 10s # Check Every 10 Seconds
+      retries: 5 # Retry Up To 5 Times Before Marking As Unhealthy
+      timeout: 5s # Timeout After 5 Seconds
 
   api:
     build:
@@ -22,6 +27,11 @@
       - postgres # Ensure The API Service Starts After The PostgreSQL Service
     ports:
       - "5000:80" # Map API Port To The Host
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/health || exit 1"] # Check If The API Is Healthy By Hitting The /health Endpoint
+      interval: 10s # Check Every 10 Seconds
+      retries: 5 # Retry Up To 5 Times Before Marking As Unhealthy
+      timeout: 3s # Timeout After 3 Seconds
 
 
 
