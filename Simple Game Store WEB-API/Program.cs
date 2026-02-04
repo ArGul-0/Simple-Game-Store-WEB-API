@@ -71,6 +71,8 @@ namespace Simple_Game_Store_WEB_API
             app.MapGamesEndpoints(); // Map Games endpoints
             app.MapGenresEndpoints(); // Map Genres endpoints
 
+            app.MapGet("/health", () => Results.Ok("Healthy!")); // Health Check Endpoint
+
             await app.MigrateDatabaseAsync(); // Apply database migrations
 
 
