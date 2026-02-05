@@ -50,17 +50,14 @@ namespace Simple_Game_Store_WEB_API
 
 
 
-            if (app.Environment.IsDevelopment()) // Enable Swagger In Development Environment
-            {
-                app.MapOpenApi();
+            app.MapOpenApi();
 
-                app.UseSwagger();
-                app.UseSwaggerUI(options => // Configure Swagger UI
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty; // Set Swagger UI At The App's Root
-                });
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI(options => // Configure Swagger UI
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = string.Empty; // Set Swagger UI At The App's Root
+            });
 
             app.UseHttpsRedirection(); // Enable HTTPS redirection
 
