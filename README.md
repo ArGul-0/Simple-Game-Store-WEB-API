@@ -9,7 +9,7 @@ The repository is designed for realistic deployments using **immutable Docker im
 - [What it is](#what-it-is)  
 - [Tech stack & features](#tech-stack--features)  
 - [Quick start — Production (recommended)](#quick-start--production-recommended)
-- [Quick start — Local for development and debugging (fast)](#quick-start--local-for-development-and-debugging-fast)  
+- [Quick start — Local for development and debugging](#quick-start--local-for-development-and-debugging)  
 - [Health & graceful restart (brief)](#health--graceful-restart-brief)  
 - [Troubleshooting (essentials)](#troubleshooting--essentials)  
 - [License](LICENSE.md)
@@ -64,7 +64,7 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 
 ---
 
-## Quick start — local for development and debugging (fast)
+## Quick start — local for development and debugging
 **Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code (Linux commands it's just example, you can do this on any other OS).
 
 1. Copy repository (or just download .ZIP file):
