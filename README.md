@@ -8,10 +8,10 @@ The repository is designed for realistic deployments using **immutable Docker im
 ## Table of contents
 - [What it is](#what-it-is)  
 - [Tech stack & features](#tech-stack--features)  
-- [Production (minimal)](#production-minimal)  
+- [Production (minimal)](#production---minimal)  
 - [Quick start — local for development or debug (fast)](#quick-start---local-fast-for-develompent-or-debug)  
 - [Health & graceful restart (brief)](#health--graceful-restart-brief)  
-- [Troubleshooting (essentials)](#troubleshooting-essentials)  
+- [Troubleshooting (essentials)](#troubleshooting---essentials)  
 - [License](#license)
 
 ---
