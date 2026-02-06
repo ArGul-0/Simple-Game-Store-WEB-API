@@ -44,7 +44,7 @@ User-friendly Web UI interface for interacting with Web APIs (using Swagger).
 ---
 
 ## Quick start — Production (recommended)
-**Requirements:** Docker (Engine + Compose).
+**Requirements:** Docker (Engine + Compose). Works on Linux, Windows and MacOS.
 
 1. Download the [**latest version**](https://github.com/ArGul-0/Simple-Game-Store-WEB-API/releases/latest)  
    or browse [**all releases**](https://github.com/ArGul-0/Simple-Game-Store-WEB-API/releases).
@@ -65,12 +65,12 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 ---
 
 ## Quick start — local for development and debugging
-**Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code (Linux commands it's just example, you can do this on any other OS).
+**Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code. Works on Linux, Windows and MacOS.
 
 1. Copy repository (or just download .ZIP file):
 ```bash
 git clone https://github.com/ArGul-0/Simple-Game-Store-WEB-API.git
-cd Simple-Game-Store-WEB-API/"Simple Game Store WEB-API" # Simple Game Store WEB-API directory it's like /src, source code
+cd Simple-Game-Store-WEB-API/"Simple Game Store WEB-API" # "Simple Game Store WEB-API" directory it's like /src, source code
 ```
 2. Start dev stack (Postgres):
 ```bash
