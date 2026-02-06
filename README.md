@@ -70,8 +70,7 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 1. Copy repository (or just download .ZIP file):
 ```bash
 git clone https://github.com/ArGul-0/Simple-Game-Store-WEB-API.git
-cd Simple-Game-Store-WEB-API &&
-cd "Simple Game Store WEB-API" # Simple Game Store WEB-API directory it's like /src, source code
+cd Simple-Game-Store-WEB-API/"Simple Game Store WEB-API" # Simple Game Store WEB-API directory it's like /src, source code
 ```
 2. Start dev stack (Postgres):
 ```bash
