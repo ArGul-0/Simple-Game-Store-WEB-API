@@ -9,7 +9,7 @@ The repository is designed for realistic deployments using **immutable Docker im
 - [What it is](#what-it-is)  
 - [Tech stack & features](#tech-stack--features)  
 - [Quick start — Production (recommended)](#quick-start--production-recommended)
-- [Quick start — Local for development or debug (fast)](#quick-start--local-for-development-and-debug-fast)  
+- [Quick start — Local for development and debugging (fast)](#quick-start--local-for-development-and-debugging-fast)  
 - [Health & graceful restart (brief)](#health--graceful-restart-brief)  
 - [Troubleshooting (essentials)](#troubleshooting--essentials)  
 - [License](LICENSE.md)
