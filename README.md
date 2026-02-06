@@ -65,24 +65,29 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 ---
 
 ## Quick start — local for development or debugging (fast)
-**Requirements:** Docker (Engine + Compose). Optional: .NET 10 SDK for local debugging.
+**Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code.
 
-1. Start dev stack (Postgres + API):
+1. Copy repository (or just download .ZIP file):
+```bash
+https://github.com/ArGul-0/Simple-Game-Store-WEB-API.git
+```
+2. Start dev stack (Postgres):
 ```bash
 # from repo root (where docker-compose.dev.yaml is located)
 docker compose -f docker-compose.dev.yaml up -d
 docker compose -f docker-compose.dev.yaml logs -f api 
 ```
-2. Stop and remove (dev):
-```bash
-docker compose -f docker-compose.dev.yaml down -v
-```
-Or run with SDK (for debugging / IDE):
+3. Run with SDK (for debugging / IDE):
 ```bash
 dotnet restore
-dotnet ef database update
 dotnet run
-# open Swagger/OpenAPI at the URL printed in logs
+# open Swagger / OpenAPI at the URL printed in logs
+```
+
+**Useful commands:**
+To stop and remove Docker container (dev):
+```bash
+docker compose -f docker-compose.dev.yaml down -v
 ```
 
 ---
