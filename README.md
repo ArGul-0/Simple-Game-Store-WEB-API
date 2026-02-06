@@ -9,7 +9,7 @@ The repository is designed for realistic deployments using **immutable Docker im
 - [What it is](#what-it-is)  
 - [Tech stack & features](#tech-stack--features)  
 - [Quick start — Production (recommended)](#quick-start--production-recommended)
-- [Quick start — Local for development or debug (fast)](#quick-start--local-for-development-or-debug-fast)  
+- [Quick start — Local for development or debug (fast)](#quick-start--local-for-development-and-debug-fast)  
 - [Health & graceful restart (brief)](#health--graceful-restart-brief)  
 - [Troubleshooting (essentials)](#troubleshooting--essentials)  
 - [License](LICENSE.md)
@@ -64,12 +64,14 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 
 ---
 
-## Quick start — local for development or debugging (fast)
-**Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code.
+## Quick start — local for development and debugging (fast)
+**Requirements:** Docker (Engine + Compose), .NET 10 SDK for local debugging and running code (Linux commands it's just example, you can do this on any other OS).
 
 1. Copy repository (or just download .ZIP file):
 ```bash
-https://github.com/ArGul-0/Simple-Game-Store-WEB-API.git
+git clone https://github.com/ArGul-0/Simple-Game-Store-WEB-API.git
+cd Simple-Game-Store-WEB-API &&
+cd "Simple Game Store WEB-API" # Simple Game Store WEB-API directory it's like /src, source code
 ```
 2. Start dev stack (Postgres):
 ```bash
