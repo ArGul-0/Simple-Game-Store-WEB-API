@@ -64,7 +64,7 @@ That’s it — this workflow uses an immutable image from your registry. Avoid 
 
 ---
 
-## Quick start — local for development or debug (fast)
+## Quick start — local for development or debugging (fast)
 **Requirements:** Docker (Engine + Compose). Optional: .NET 10 SDK for local debugging.
 
 1. Start dev stack (Postgres + API):
@@ -93,7 +93,7 @@ App exposes /health  — used by Docker healthchecks.
 ---
 
 # Troubleshooting — essentials
-- **no configuration file provided:** not found → pass -f docker-compose.prod.yaml or rename file to docker-compose.yaml.
+- **no configuration file provided: not found** → pass -f docker-compose.prod.yaml or rename file to docker-compose.yaml.
 - **could not connect to server** → inspect Postgres logs (docker compose logs -f postgres) and run pg_isready. Ensure the API ConnectionStrings__DefaultConnection uses host postgres (the service name).
 
 After pushing a new image tag, run docker compose pull before up -d on server.
