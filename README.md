@@ -8,7 +8,7 @@ The repository is designed for realistic deployments using **immutable Docker im
 ## Table of contents
 - [What it is](#what-it-is)  
 - [Tech stack & features](#tech-stack--features)  
-- [Quick start — Production for see results (recommended, fast))](#quick-start--production-for-see-results-recommended-fast)  
+- [Quick start — Production (recommended)](#quick-start--production-recommended)
 - [Quick start — Local for development or debug (fast)](#quick-start--local-for-development-or-debug-fast)  
 - [Health & graceful restart (brief)](#health--graceful-restart-brief)  
 - [Troubleshooting (essentials)](#troubleshooting--essentials)  
@@ -43,7 +43,7 @@ User-friendly Web UI interface for interacting with Web APIs (using Swagger).
 
 ---
 
-## Production — minimal (only the essentials)
+## Quick start — Production (recommended)
 **Requirements:** Docker (Engine + Compose).
 
 1. Download the [**latest version**](https://github.com/ArGul-0/Simple-Game-Store-WEB-API/releases/latest)  
