@@ -46,17 +46,20 @@ User-friendly Web UI interface for interacting with Web APIs (using Swagger).
 ## Production — minimal (only the essentials)
 **Requirements:** Docker (Engine + Compose).
 
-1. Place files on server (e.g. /opt/simple-game-store or any other folder / directory on any OS, Linux it's just example):
+1. Download the [**latest version**](https://github.com/ArGul-0/Simple-Game-Store-WEB-API/releases/latest)  
+   or browse [**all releases**](https://github.com/ArGul-0/Simple-Game-Store-WEB-API/releases).
+
+2. Place files on server (e.g. /opt/simple-game-store or any other folder / directory on any OS, Linux it's just example):
 docker-compose.prod.yaml
 
-2. Pull & Run:
+3. Pull & Run:
 ```bash
 cd /opt/simple-game-store
 docker compose -f docker-compose.prod.yaml pull
 docker compose -f docker-compose.prod.yaml up -d
 ```
 
-Visit ```http://localhost:5000/``` to see Swagger UI and try Web API
+Visit ```http://localhost:5000/``` to see Swagger UI and try Web API.
 That’s it — this workflow uses an immutable image from your registry. Avoid --build on production.
 
 ---
@@ -90,7 +93,7 @@ App exposes /health  — used by Docker healthchecks.
 ---
 
 # Troubleshooting — essentials
-- **no configuration file provided:** not found → pass -f docker-compose.prod.yaml or rename file to docker-compose.yml.
+- **no configuration file provided:** not found → pass -f docker-compose.prod.yaml or rename file to docker-compose.yaml.
 - **could not connect to server** → inspect Postgres logs (docker compose logs -f postgres) and run pg_isready. Ensure the API ConnectionStrings__DefaultConnection uses host postgres (the service name).
 
 After pushing a new image tag, run docker compose pull before up -d on server.
