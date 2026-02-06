@@ -89,7 +89,7 @@ App exposes /health  — used by Docker healthchecks.
 
 ---
 
-#Troubleshooting — essentials
+# Troubleshooting — essentials
 - **no configuration file provided:** not found → pass -f docker-compose.prod.yaml or rename file to docker-compose.yml.
 - **could not connect to server** → inspect Postgres logs (docker compose logs -f postgres) and run pg_isready. Ensure the API ConnectionStrings__DefaultConnection uses host postgres (the service name).
 
