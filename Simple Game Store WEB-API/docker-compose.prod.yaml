@@ -15,7 +15,7 @@
       timeout: 5s # Timeout After 5 Seconds
 
   api:
-    image: argul0/simple-game-store:simple-game-store-web-api-1.1.0 # Use The Published Docker Image From Docker Hub For Current Version
+    image: argul0/simple-game-store:simple-game-store-web-api-1.1.1 # Use The Published Docker Image From Docker Hub For Current Version
     restart: always # Always Restart The Container If It Stops
     environment:
       ASPNETCORE_ENVIRONMENT: Production # Set The ASP.NET Core Environment To Production
