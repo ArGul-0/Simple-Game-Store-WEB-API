@@ -30,7 +30,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .Select(g => genreMapper.ToDTO(g))
                     .ToListAsync();
                 return Results.Ok(genres);
-            });
+            }).WithName(GetGenreEndpointName); ;
 
             // Get Genre
             genresGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGenreMapper genreMapper) =>
