@@ -9,7 +9,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 {
     public static class GamesEndpoints // Static Class For Games Endpoints
     {
-        const string GetGameEndpointName = "GetGame"; // Constant For The Get Game Endpoint Name
+        const string GetAllGamesEndpointName = "GetAllGames"; // Constant For The Get All Games Endpoint Name
+        const string GetGameByIDEndpointName = "GetGameByID"; // Constant For The Get Game By ID Endpoint Name
+        const string CreateGameEndpointName = "CreateGame"; // Constant For The Create Game Endpoint Name
+        const string UpdateGameEndpointName = "UpdateGame"; // Constant For The Update Game Endpoint Name
+        const string DeleteGameEndpointName = "DeleteGame"; // Constant For The Delete Game Endpoint Name
 
         /// <summary>
         /// Maps The Games Endpoints To The Web Application
@@ -38,7 +42,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .ToListAsync();
 
                 return Results.Ok(games);
-            });
+            }).WithName(GetAllGamesEndpointName);
 
             // GET Game
             gamesGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
@@ -48,7 +52,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .FirstOrDefaultAsync(g => g.ID == ID);
 
                 return game is not null ? Results.Ok(gameMapper.ToDetailsDTO(game)) : Results.NotFound();
-            }).WithName(GetGameEndpointName);
+            }).WithName(GetGameByIDEndpointName);
 
             // POST Game
             gamesGroup.MapPost("/", async (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
@@ -60,7 +64,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                 await dbContext.SaveChangesAsync();
 
-                return Results.CreatedAtRoute(GetGameEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
+                return Results.CreatedAtRoute(GetGameByIDEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
             }).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>(); // Add Validation Filter
 
             // PUT Game
@@ -80,7 +84,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
-            }).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>(); // Add Validation Filter
+            }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>(); // Add Validation Filter
 
             // DELETE Game
             gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
@@ -90,7 +94,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 .ExecuteDeleteAsync();
 
                 return affected == 0 ? Results.NotFound() : Results.NoContent();
-            });
+            }).WithName(DeleteGameEndpointName);
 
             return gamesGroup; // Return The Group For Further Configuration If Needed
         }

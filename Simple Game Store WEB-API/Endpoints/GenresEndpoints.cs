@@ -7,7 +7,8 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 {
     public static class GenresEndpoints // Static Class For Genres Endpoints
     {
-        const string GetGenreEndpointName = "GetGenre"; // Constant For The Get Genre Endpoint Name
+        const string GetAllGenresEndpointName = "GetAllGenres"; // Constant For The Get All Genres Endpoint Name
+        const string GetGenreByIDEndpointName = "GetGenreByID"; // Constant For The Get Genre By ID Endpoint Name
 
         /// <summary>
         /// Maps The Genres Endpoints To The Web Application
@@ -31,7 +32,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .ToListAsync();
 
                 return Results.Ok(genres);
-            });
+            }).WithName(GetAllGenresEndpointName);
 
             // Get Genre
             genresGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGenreMapper genreMapper) =>
@@ -41,7 +42,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .FirstOrDefaultAsync(g => g.ID == ID);
 
                 return genre is not null ? Results.Ok(genreMapper.ToDTO(genre)) : Results.NotFound();
-            }).WithName(GetGenreEndpointName);
+            }).WithName(GetGenreByIDEndpointName);
 
             return genresGroup; // Return The Group For Further Configuration If Needed
         }
