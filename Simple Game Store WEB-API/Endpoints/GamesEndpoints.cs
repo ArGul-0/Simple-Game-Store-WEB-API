@@ -65,7 +65,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.CreatedAtRoute(GetGameByIDEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
-            }).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>(); // Add Validation Filter
+            }).WithName(CreateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>(); // Add Validation Filter
 
             // PUT Game
             gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
