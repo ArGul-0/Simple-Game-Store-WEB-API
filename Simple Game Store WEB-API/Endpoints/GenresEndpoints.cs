@@ -11,6 +11,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         const string GetAllGenresEndpointName = "GetAllGenres"; // Constant For The Get All Genres Endpoint Name
         const string GetGenreByIDEndpointName = "GetGenreByID"; // Constant For The Get Genre By ID Endpoint Name
         const string CreateGenreEndpointName = "CreateGenre"; // Constant For The Create Genre Endpoint Name
+        const string UpdateGenreEndpointName = "UpdateGenre"; // Constant For The Update Genre Endpoint Name
 
         /// <summary>
         /// Maps The Genres Endpoints To The Web Application
@@ -57,6 +58,23 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                 return Results.CreatedAtRoute(GetGenreByIDEndpointName, new { ID = newGenre.ID }, genreMapper.ToDTO(newGenre));
             }).WithName(CreateGenreEndpointName);
+
+            // Update Genre
+            genresGroup.MapPut("/{ID}", async (int ID, UpdateGenreDTO updatedGenreDTO, GameStoreContext dbContext, IGenreMapper genreMapper) =>
+            {
+                Genre? existingGenre = await dbContext.Genres.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
+                if (existingGenre is null)
+                    return Results.NotFound();
+
+                existingGenre = genreMapper.ToEntity(updatedGenreDTO);
+                existingGenre.ID = ID;
+
+                dbContext.Genres.Update(existingGenre);
+
+                await dbContext.SaveChangesAsync();
+
+                return Results.NoContent();
+            }).WithName(UpdateGenreEndpointName);
 
             return genresGroup; // Return The Group For Further Configuration If Needed
         }

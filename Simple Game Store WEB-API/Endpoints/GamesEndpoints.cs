@@ -32,7 +32,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
 
-            // GET All Games
+            // Get All Games
             gamesGroup.MapGet("/", async (GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 var games = await dbContext.Games
@@ -44,7 +44,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 return Results.Ok(games);
             }).WithName(GetAllGamesEndpointName);
 
-            // GET Game
+            // Get Game
             gamesGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 Game? game = await dbContext.Games
@@ -54,7 +54,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 return game is not null ? Results.Ok(gameMapper.ToDetailsDTO(game)) : Results.NotFound();
             }).WithName(GetGameByIDEndpointName);
 
-            // POST Game
+            // Create Game
             gamesGroup.MapPost("/", async (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
                 Game game = gameMapper.ToEntity(newGame);
@@ -67,26 +67,26 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 return Results.CreatedAtRoute(GetGameByIDEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
             }).WithName(CreateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>(); // Add Validation Filter
 
-            // PUT Game
+            // Update Game
             gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
             {
-                Game? game = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
+                Game? existingGame = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
 
-                if (game is null)
+                if (existingGame is null)
                     return Results.NotFound();
 
-                game = gameMapper.ToEntity(updatedGame);
-                game.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
-                game.ID = ID;
+                existingGame = gameMapper.ToEntity(updatedGame);
+                existingGame.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
+                existingGame.ID = ID;
 
-                dbContext.Games.Update(game);
+                dbContext.Games.Update(existingGame);
 
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
             }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>(); // Add Validation Filter
 
-            // DELETE Game
+            // Delete Game
             gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
             {
                 var affected = await dbContext.Games
