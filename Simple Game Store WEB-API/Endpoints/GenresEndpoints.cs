@@ -12,6 +12,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         const string GetGenreByIDEndpointName = "GetGenreByID"; // Constant For The Get Genre By ID Endpoint Name
         const string CreateGenreEndpointName = "CreateGenre"; // Constant For The Create Genre Endpoint Name
         const string UpdateGenreEndpointName = "UpdateGenre"; // Constant For The Update Genre Endpoint Name
+        const string DeleteGenreEndpointName = "DeleteGenre"; // Constant For The Delete Genre Endpoint Name
 
         /// <summary>
         /// Maps The Genres Endpoints To The Web Application
@@ -75,6 +76,16 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                 return Results.NoContent();
             }).WithName(UpdateGenreEndpointName);
+
+            // Delete Genre
+            genresGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
+            {
+                var affected = await dbContext.Genres
+                .Where(g => g.ID == ID)
+                .ExecuteDeleteAsync();
+
+                return affected == 0 ? Results.NotFound() : Results.NoContent();
+            }).WithName(DeleteGenreEndpointName);
 
             return genresGroup; // Return The Group For Further Configuration If Needed
         }
