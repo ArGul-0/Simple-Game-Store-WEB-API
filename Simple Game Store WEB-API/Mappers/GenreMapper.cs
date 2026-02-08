@@ -5,7 +5,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
 {
     public class GenreMapper : IGenreMapper
     {
-        public Genre ToEntity(CreateGenreDTO createGenreDTO)
+        public Genre ToEntity(CreateGenreDTO createGenreDTO) // Converts CreateGenreDTO To Genre Entity
         {
             return new Genre
             {
@@ -13,7 +13,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
             };
         }
 
-        public Genre ToEntity(UpdateGenreDTO updateGenreDTO)
+        public Genre ToEntity(UpdateGenreDTO updateGenreDTO) // Converts UpdateGenreDTO To Genre Entity
         {
             return new Genre
             {
@@ -23,7 +23,7 @@ namespace Simple_Game_Store_WEB_API.Mappers
 
 
 
-        public GenreDTO ToDTO(Genre genre)
+        public GenreDTO ToDTO(Genre genre) // Converts Genre Entity To GenreDTO
         {
             return new GenreDTO(
                 ID: genre.ID,
