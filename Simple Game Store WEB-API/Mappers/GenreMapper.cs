@@ -5,6 +5,24 @@ namespace Simple_Game_Store_WEB_API.Mappers
 {
     public class GenreMapper : IGenreMapper
     {
+        public Genre ToEntity(CreateGenreDTO createGenreDTO)
+        {
+            return new Genre
+            {
+                Name = createGenreDTO.Name
+            };
+        }
+
+        public Genre ToEntity(UpdateGenreDTO updateGenreDTO)
+        {
+            return new Genre
+            {
+                Name = updateGenreDTO.Name
+            };
+        }
+
+
+
         public GenreDTO ToDTO(Genre genre)
         {
             return new GenreDTO(
