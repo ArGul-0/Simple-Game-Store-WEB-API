@@ -80,6 +80,10 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             // Delete Genre
             genresGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
             {
+                bool haveGamesWithGenre = await dbContext.Games.AnyAsync(g => g.GenreID == ID);
+                if(haveGamesWithGenre)
+                    return Results.BadRequest("Cannot delete genre because there are games associated with it.");
+
                 var affected = await dbContext.Genres
                 .Where(g => g.ID == ID)
                 .ExecuteDeleteAsync();
