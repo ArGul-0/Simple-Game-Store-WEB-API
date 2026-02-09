@@ -6,42 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  traffic:
+  Traffic:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Get traffic data
+      - name: Get Traffic data
         run: |
-          mkdir -p traffic
+          mkdir -p Traffic
 
           curl -H "Accept: application/vnd.github+json" \
                -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
                https://api.github.com/repos/${{ github.repository }}/traffic/views \
-               > traffic/views.json
+               > Traffic/Views.json
 
           curl -H "Accept: application/vnd.github+json" \
                -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
                https://api.github.com/repos/${{ github.repository }}/traffic/clones \
-               > traffic/clones.json
+               > Traffic/Clones.json
 
       - name: Append history
         run: |
           date=$(date -u +"%Y-%m-%d")
-          views=$(jq '.count' traffic/views.json)
-          uniques=$(jq '.uniques' traffic/views.json)
-          clones=$(jq '.count' traffic/clones.json)
-          cloners=$(jq '.uniques' traffic/clones.json)
+          views=$(jq '.count' Traffic/Views.json)
+          uniques=$(jq '.uniques' Traffic/Views.json)
+          clones=$(jq '.count' Traffic/Clones.json)
+          cloners=$(jq '.uniques' Traffic/Clones.json)
 
-          echo "$date,$views,$uniques,$clones,$cloners" >> traffic/history.csv
+          echo "$date,$views,$uniques,$clones,$cloners" >> Traffic/History.csv
 
       - name: Commit data
         run: |
           git config --global user.name "traffic-bot"
           git config --global user.email "bot@users.noreply.github.com"
 
-          git add traffic/history.csv
+          git add Traffic/History.csv
           git commit -m "Update traffic history" || exit 0
           git push
