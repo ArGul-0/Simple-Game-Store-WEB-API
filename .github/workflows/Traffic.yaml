@@ -18,14 +18,14 @@ jobs:
           mkdir -p Traffic
 
           curl -H "Accept: application/vnd.github+json" \
-               -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-               https://api.github.com/repos/${{ github.repository }}/traffic/views \
-               > Traffic/Views.json
+              -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/traffic/views \
+              > Traffic/Views.json
 
           curl -H "Accept: application/vnd.github+json" \
-               -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-               https://api.github.com/repos/${{ github.repository }}/traffic/clones \
-               > Traffic/Clones.json
+              -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/traffic/clones \
+              > Traffic/Clones.json
 
       - name: Append history
         run: |
