@@ -3,8 +3,8 @@
     public class User // User Entity Class
     {
         public int ID { get; set; }
-        public required string UserName { get; set; }
-        public required string UserEmail { get; set; }
-        public required string HashedUserPassword { get; set; }
+        public required string Username { get; set; }
+        public required string Email { get; set; }
+        public required string HashedPassword { get; set; }
     }
 }
