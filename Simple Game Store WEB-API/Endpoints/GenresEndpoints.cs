@@ -20,6 +20,10 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         /// <remarks>
         /// This Method Sets Up The Following Endpoints Under The /Genres Route:
         /// - GET /Genres: Retrieve All Genres
+        /// - GET /Genres/{ID}: Retrieve A Specific Genre By ID
+        /// - POST /Genres: Create A New Genre
+        /// - PUT /Genres/{ID}: Update An Existing Genre By ID
+        /// - DELETE /Genres/{ID}: Delete A Genre By ID (Only If No Games Are Associated With It)
         /// </remarks>
         public static RouteGroupBuilder MapGenresEndpoints(this WebApplication app)
         {
