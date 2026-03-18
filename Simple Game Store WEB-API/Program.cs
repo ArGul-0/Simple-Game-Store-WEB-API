@@ -59,22 +59,23 @@ namespace Simple_Game_Store_WEB_API
                 options.RoutePrefix = string.Empty; // Set Swagger UI At The App's Root
             });
 
-            app.UseHttpsRedirection(); // Enable HTTPS redirection
+            app.UseHttpsRedirection(); // Enable HTTPS Redirection
 
-            app.UseAuthorization(); // Enable Authorization middleware
+            app.UseAuthorization(); // Enable Authorization Middleware
 
 
 
-            app.MapGamesEndpoints(); // Map Games endpoints
-            app.MapGenresEndpoints(); // Map Genres endpoints
+            app.MapGamesEndpoints(); // Map Games Endpoints
+            app.MapGenresEndpoints(); // Map Genres Endpoints
+            app.MapAuthEndpoints(); // Map Auth Endpoints
 
             app.MapGet("/health", () => Results.Ok("Healthy!")); // Health Check Endpoint
 
-            await app.MigrateDatabaseAsync(); // Apply database migrations
+            await app.MigrateDatabaseAsync(); // Apply Database Migrations
 
 
 
-            app.Run(); // Run the application
+            app.Run(); // Run The Application
         }
     }
 }

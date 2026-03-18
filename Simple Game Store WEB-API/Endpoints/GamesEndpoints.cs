@@ -28,7 +28,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         /// </remarks>
         public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
         {
-            var gamesGroup = app.MapGroup("/Games"); // Create A group For /Games Endpoints
+            var gamesGroup = app.MapGroup("/Games"); // Create A Group For /Games Endpoints
 
 
 
