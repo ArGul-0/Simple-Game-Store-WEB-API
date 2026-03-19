@@ -3,16 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Game_Store_WEB_API.Data
 {
-    public class GameStoreContext(DbContextOptions<GameStoreContext> options) : DbContext(options) // DbContext for Game Store
+    public class GameStoreContext(DbContextOptions<GameStoreContext> options) : DbContext(options) // DbContext For Game Store
     {
-        public DbSet<Game> Games => Set<Game>(); // DbSet for Games entity
-        public DbSet<Genre> Genres => Set<Genre>(); // DbSet for Genres entity
+        public DbSet<Game> Games => Set<Game>(); // DbSet For Games Entity
+        public DbSet<Genre> Genres => Set<Genre>(); // DbSet For Genres Entity
+        public DbSet<User> Users => Set<User>(); // DbSet For Users Entity
 
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) // Configure model creation
+        protected override void OnModelCreating(ModelBuilder modelBuilder) // Configure Model Creation
         {
-            modelBuilder.Entity<Genre>().HasData( // Seed initial data for Genres
+            modelBuilder.Entity<Genre>().HasData( // Seed Initial Data For Genres
             new Genre { ID = 1, Name = "Action-Adventure" },
             new Genre { ID = 2, Name = "Management" },
             new Genre { ID = 3, Name = "RPG" },
@@ -25,7 +26,7 @@ namespace Simple_Game_Store_WEB_API.Data
             new Genre { ID = 10, Name = "Adventure" }
             );
 
-            modelBuilder.Entity<Game>().HasData( // Seed initial data for Games
+            modelBuilder.Entity<Game>().HasData( // Seed Initial Data For Games
                 new Game
                 {
                     ID = 1,

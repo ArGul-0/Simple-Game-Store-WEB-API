@@ -7,8 +7,8 @@
         /// </summary>
         public Task Login(string username, string password);
         /// <summary>
-        /// Register Is Used To Create A New User Account With The Provided Username And Password. It Validates The Input Data, Ensures That The Username Is Unique, And Stores The User's Credentials In The User Store. After Successful Registration, The User Can Log In Using The Registered Credentials To Access Protected Resources Or Perform Authenticated Actions Within The Application.
+        /// Register Is Used To Create A New User Account With The Provided Username, Email, And Password. It Validates The Input Data, Ensures That The Username And Email Are Unique, And Stores The User's Credentials In The User Store. After Successful Registration, The User Can Log In Using The Registered Credentials To Access Protected Resources Or Perform Authenticated Actions Within The Application.
         /// </summary>
-        public Task Register(string username, string password);
+        public Task Register(string username, string email, string password);
     }
 }

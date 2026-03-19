@@ -17,7 +17,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -47,7 +47,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
                     b.HasIndex("GenreID");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
 
                     b.HasData(
                         new
@@ -122,7 +122,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
 
                     b.HasData(
                         new
