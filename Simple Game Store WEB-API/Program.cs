@@ -1,3 +1,4 @@
+using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Endpoints;
 using Simple_Game_Store_WEB_API.Mappers;
@@ -25,13 +26,24 @@ namespace Simple_Game_Store_WEB_API
 
             builder.Services.AddValidation(); // Add validation services
             builder.Services.AddProblemDetails(); // Add Problem Details services
-            builder.Services.AddScoped<IValidator<CreateGameDTO>, CreateGameDTOValidator>(); // Register CreateGameDTO Validator, NuGet FluentValidation Package
-            builder.Services.AddScoped<IValidator<UpdateGameDTO>, UpdateGameDTOValidator>(); // Register UpdateGameDTO Validator, NuGet FluentValidation Package
 
             var connString = builder.Configuration.GetConnectionString("DefaultConnection"); // Get Connection String From Configuration
 
             builder.Services.AddDbContext<GameStoreContext>(options => // Use PostgreSQL Database
                 options.UseNpgsql(connString)); // PostgreSQL provider
+
+            builder.Services.AddScoped<IValidator<CreateGameDTO>, CreateGameDTOValidator>(); // Register CreateGameDTO Validator, NuGet FluentValidation Package
+            builder.Services.AddScoped<IValidator<UpdateGameDTO>, UpdateGameDTOValidator>(); // Register UpdateGameDTO Validator, NuGet FluentValidation Package
+
+            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper Service, Scoped lifetime
+            builder.Services.AddScoped<IGenreMapper, GenreMapper>(); // Register GenreMapper Service, Scoped lifetime
+
+            builder.Services.AddScoped<IAuthService, AuthService>(); // Register AuthService, Scoped lifetime
+            builder.Services.AddScoped<ITokenService, TokenService>(); // Register TokenService, Scoped lifetime
+
+            builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped lifetime
+
+
 
             builder.Services.AddSwaggerGen(options => // Configure Swagger
             {
@@ -42,9 +54,6 @@ namespace Simple_Game_Store_WEB_API
                     Description = "A Simple Game Store WEB-API Created On ASP.NET Core"
                 });
             });
-
-            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper Service, Scoped lifetime
-            builder.Services.AddScoped<IGenreMapper, GenreMapper>(); // Register GenreMapper Service, Scoped lifetime
 
             var app = builder.Build(); // Build the application
 
