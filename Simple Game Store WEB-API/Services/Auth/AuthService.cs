@@ -4,13 +4,16 @@
     {
         private readonly IValueHasher valueHasher;
         private readonly ITokenService tokenService;
+
         public AuthService(IValueHasher valueHasher, ITokenService tokenService)
         {
             this.valueHasher = valueHasher;
             this.tokenService = tokenService;   
         }
 
-        public async Task Login(string username, string password)
+
+
+        public async Task Login(string email, string password)
         {
         }
 
