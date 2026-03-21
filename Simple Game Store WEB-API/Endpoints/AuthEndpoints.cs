@@ -1,4 +1,5 @@
 ﻿using Simple_Game_Store_WEB_API.Services.Auth;
+using Simple_Game_Store_WEB_API.DTOs.Auth;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -14,11 +15,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // Login Endpoint
-            app.MapPost("/Login", async (string username, string password, IAuthService authService) =>
+            app.MapPost("/Login", async (LoginUserDTO loginUserDTO, IAuthService authService) =>
             {
                 try
                 {
-                    await authService.Login(username, password);
+                    await authService.Login(loginUserDTO.Username, loginUserDTO.Password);
 
                     return Results.Ok("Login Successful.");
                 }
@@ -29,12 +30,12 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(LoginEndpointName);
 
             // Register Endpoint
-            app.MapPost("/Register", async (string username, string email, string password, IAuthService authService) =>
+            app.MapPost("/Register", async (RegisterUserDTO registerUserDTO, IAuthService authService) =>
             {
                 try
                 {
-                    await authService.Login(username, password); // Optional: Check If User Already Exists Before Registering
-                    await authService.Register(username, email, password);
+                    await authService.Login(registerUserDTO.Username, registerUserDTO.Password); // Optional: Check If User Already Exists Before Registering
+                    await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
 
                     return Results.Ok("Registration Successful.");
                 }
