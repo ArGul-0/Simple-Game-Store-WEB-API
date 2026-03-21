@@ -1,8 +1,8 @@
 ﻿using Simple_Game_Store_WEB_API.Entities;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Simple_Game_Store_WEB_API.Services.Auth
 {
