@@ -25,7 +25,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("id", user.ID.ToString()),
+                    new Claim("userID", user.ID.ToString()),
                     new Claim("username", user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddHours(int.Parse(configuration["JwtOptions:ExpirationHours"] ?? throw new Exception("JWT Expiration Hours is not configured."))),
