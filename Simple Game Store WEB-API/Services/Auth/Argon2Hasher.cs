@@ -12,7 +12,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
         private const int Iterations = 4; // Number Of Iterations
         private const int MemorySize = 1024 * 64; // Memory Size In KB (64 MB)
 
-        public async Task<string> Hash(string value)
+        public async Task<string> HashAsync(string value)
         {
             if (value is null) throw new ArgumentNullException(nameof(value)); // Validate Input
 
@@ -50,7 +50,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
             }
         }
 
-        public async Task<bool> Verify(string value, string hashedValue)
+        public async Task<bool> VerifyAsync(string value, string hashedValue)
         {
             if (value is null) throw new ArgumentNullException(nameof(value)); // Validate Input
             if (hashedValue is null) throw new ArgumentNullException(nameof(hashedValue)); // Validate Input
