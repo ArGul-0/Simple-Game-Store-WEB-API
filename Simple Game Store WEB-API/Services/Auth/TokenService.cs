@@ -17,7 +17,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
 
         public string GenerateAccessToken(User user)
         {
-            var secretKey = configuration["JwtOptions:SecretKey"];
+            var secretKey = configuration["JwtOptions:SecretKey"] ?? throw new Exception("JWT Secret Key is not configured.");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -28,7 +28,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
                     new Claim("id", user.ID.ToString()),
                     new Claim("username", user.Username)
                 }),
-                Expires = DateTime.UtcNow.AddHours(int.Parse(configuration["JwtOptions:ExpirationHours"])),
+                Expires = DateTime.UtcNow.AddHours(int.Parse(configuration["JwtOptions:ExpirationHours"] ?? throw new Exception("JWT Expiration Hours is not configured."))),
                 SigningCredentials = credentials
             };
 

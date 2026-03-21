@@ -1,4 +1,6 @@
-﻿namespace Simple_Game_Store_WEB_API.Services.Auth
+﻿using Simple_Game_Store_WEB_API.Entities;
+
+namespace Simple_Game_Store_WEB_API.Services.Auth
 {
     public class AuthService : IAuthService
     {
@@ -27,7 +29,14 @@
             string hashedPassword = await valueHasher.HashAsync(password); // Hash The Password
             string hashedEmail = await valueHasher.HashAsync(email); // Hash The Email
 
+            User newUser = new User
+            {
+                Username = username,
+                HashedEmail = hashedEmail,
+                HashedPassword = hashedPassword
+            };
 
+            string token = tokenService.GenerateAccessToken(newUser); // Generate Access Token For The New User
         }
     }
 }
