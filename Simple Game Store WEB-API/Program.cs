@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Endpoints;
 using Simple_Game_Store_WEB_API.Mappers;
+using Microsoft.IdentityModel.Tokens;
 using Simple_Game_Store_WEB_API.DTOs;
 using Simple_Game_Store_WEB_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using FluentValidation;
+using System.Text;
 
 namespace Simple_Game_Store_WEB_API
 {
@@ -17,8 +20,6 @@ namespace Simple_Game_Store_WEB_API
             var builder = WebApplication.CreateBuilder(args); // Create A WebApplication Builder
 
 
-
-            builder.Services.AddAuthorization(); // Add Services To The Container.
 
             builder.Services.AddOpenApi(); // Learn More About Configuring OpenAPI At https://aka.ms/aspnet/openapi
 
@@ -43,6 +44,22 @@ namespace Simple_Game_Store_WEB_API
 
             builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped Lifetime
 
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Add Authentication Services With JWT Bearer Scheme
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters // Configure Token Validation Parameters
+                {
+                    ValidateIssuer = true, // Enable Issuer Validation To Ensure Token Is Issued By A Trusted Authority
+                    ValidateAudience = true, // Enable Audience Validation To Ensure Token Is Intended For This API
+                    ValidateLifetime = true, // Enable Lifetime Validation To Ensure Tokens Expire
+                    ValidateIssuerSigningKey = true, // Enable Issuer Signing Key Validation To Ensure Token Integrity
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                        builder.Configuration["JwtOptions:SecretKey"]!)), // Use A Symmetric Security Key Derived From The Secret Key In Configuration
+                };
+            });
+
+            builder.Services.AddAuthorization(); // Add Services To The Container.
 
             builder.Services.AddSwaggerGen(options => // Configure Swagger
             {
