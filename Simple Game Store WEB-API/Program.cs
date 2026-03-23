@@ -70,6 +70,7 @@ namespace Simple_Game_Store_WEB_API
 
             app.UseHttpsRedirection(); // Enable HTTPS Redirection
 
+            app.UseAuthentication(); // Enable Authentication Middleware
             app.UseAuthorization(); // Enable Authorization Middleware
 
 
