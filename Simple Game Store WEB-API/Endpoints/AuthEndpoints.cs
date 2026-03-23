@@ -30,12 +30,14 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(LoginEndpointName);
 
             // Register Endpoint
-            app.MapPost("/Register", async (RegisterUserDTO registerUserDTO, IAuthService authService) =>
+            app.MapPost("/Register", async (RegisterUserDTO registerUserDTO, IAuthService authService, HttpContent httpContent) =>
             {
                 try
                 {
                     await authService.Login(registerUserDTO.Username, registerUserDTO.Password); // Optional: Check If User Already Exists Before Registering
                     await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
+
+
 
                     return Results.Ok("Registration Successful.");
                 }
