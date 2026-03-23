@@ -35,14 +35,13 @@ namespace Simple_Game_Store_WEB_API
             builder.Services.AddScoped<IValidator<CreateGameDTO>, CreateGameDTOValidator>(); // Register CreateGameDTO Validator, NuGet FluentValidation Package
             builder.Services.AddScoped<IValidator<UpdateGameDTO>, UpdateGameDTOValidator>(); // Register UpdateGameDTO Validator, NuGet FluentValidation Package
 
-            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper Service, Scoped lifetime
-            builder.Services.AddScoped<IGenreMapper, GenreMapper>(); // Register GenreMapper Service, Scoped lifetime
+            builder.Services.AddScoped<IGameMapper, GameMapper>(); // Register GameMapper Service, Scoped Lifetime
+            builder.Services.AddScoped<IGenreMapper, GenreMapper>(); // Register GenreMapper Service, Scoped Lifetime
 
-            builder.Services.AddScoped<IAuthService, AuthService>(); // Register AuthService, Scoped lifetime
-            builder.Services.AddScoped<ITokenService, TokenService>(); // Register TokenService, Scoped lifetime
+            builder.Services.AddScoped<IAuthService, AuthService>(); // Register AuthService, Scoped Lifetime
+            builder.Services.AddScoped<ITokenService, TokenService>(); // Register TokenService, Scoped Lifetime
 
-            builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped lifetime
-
+            builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped Lifetime
 
 
             builder.Services.AddSwaggerGen(options => // Configure Swagger
