@@ -1,4 +1,5 @@
-﻿using Simple_Game_Store_WEB_API.Entities;
+﻿using Simple_Game_Store_WEB_API.Services.Auth.Results;
+using Simple_Game_Store_WEB_API.Entities;
 
 namespace Simple_Game_Store_WEB_API.Services.Auth
 {
@@ -15,16 +16,15 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
 
 
 
-        public async Task Login(string email, string password)
+        public async Task<AuthServiceResult> Login(string email, string password)
         {
+            return AuthServiceResult.Success; // Implement The Actual Login Logic Later, This Is Just A Placeholder To Allow The Application To Run Without Errors For Now.
         }
 
-        public async Task Register(string username, string email, string password)
+        public async Task<AuthServiceResult> Register(string username, string email, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("Username, email, and password cannot be empty.");
-            }
+                return AuthServiceResult.InvalidCredentials; // Return InvalidCredentials If Any Of The Required Fields Are Missing Or Empty
 
             string hashedPassword = await valueHasher.HashAsync(password); // Hash The Password
             string hashedEmail = await valueHasher.HashAsync(email); // Hash The Email
@@ -37,6 +37,8 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
             };
 
             string token = tokenService.GenerateAccessToken(newUser); // Generate Access Token For The New User
+
+            return AuthServiceResult.Success;
         }
     }
 }
