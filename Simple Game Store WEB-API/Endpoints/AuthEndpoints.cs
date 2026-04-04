@@ -1,5 +1,4 @@
-﻿using Simple_Game_Store_WEB_API.Services.Auth.Results;
-using Simple_Game_Store_WEB_API.Services.Auth;
+﻿using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.DTOs.Auth;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
@@ -36,19 +35,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 try
                 {
                     var loginResult = await authService.Login(registerUserDTO.Username, registerUserDTO.Password); // Optional: Check If User Already Exists Before Registering
-                    if (loginResult == AuthServiceResult.Success)
-                        return Results.Ok("Success login");
+                    if(loginResult != string.Empty)
+                        return Results.Ok($"{loginResult}");
 
                     loginResult = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
-                    if(loginResult == AuthServiceResult.Success)
-                        return Results.Ok("Registration Successful.");
-                    else if (loginResult == AuthServiceResult.UserNotFound)
-                        return Results.BadRequest("User Not Found.");
-                    else if (loginResult == AuthServiceResult.InvalidCredentials)
-                        return Results.BadRequest("Invalid Credentials.");
-                    else
-                        return Results.BadRequest("An Error Occurred During Registration.");
-
+                    return Results.Ok($"{loginResult}");
                 }
                 catch (Exception ex)
                 {
