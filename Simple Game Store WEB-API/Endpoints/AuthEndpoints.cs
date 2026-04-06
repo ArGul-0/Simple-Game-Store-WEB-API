@@ -40,6 +40,15 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                         return Results.Ok($"{loginResult}");
 
                     Result<string> result = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
+                    if(result.IsFailure)
+                    {
+                        return result.Error.Code switch
+                        {
+                            "InvalidCredentials" => Results.BadRequest(result.Error.Description), // Invalid Credentials Error
+                            _ => Results.BadRequest(result.Error.Description)
+                        };
+                    }
+
                     return Results.Ok($"{result.value}");
                 }
                 catch (Exception ex)
