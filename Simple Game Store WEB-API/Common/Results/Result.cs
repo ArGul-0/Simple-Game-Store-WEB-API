@@ -26,6 +26,7 @@
         /// <summary>
         /// Creates A Failed Result With The Provided Error.
         /// </summary>
+        /// <param name="error">The Error Associated With The Failure.</param>
         /// <returns>A Failed Result With The Provided Error.</returns>
         public static Result Failure(Error error)
         {
