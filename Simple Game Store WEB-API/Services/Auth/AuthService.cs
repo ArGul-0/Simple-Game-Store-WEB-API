@@ -38,7 +38,7 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
 
             string token = tokenService.GenerateAccessToken(newUser); // Generate Access Token For The New User
 
-            return Task.FromResult(Result<string>.Success(token)); // Return The Token As A Result
+            return Result<string>.Success(token); // Return The Token As A Result
         }
     }
 }
