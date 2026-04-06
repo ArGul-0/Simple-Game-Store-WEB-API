@@ -1,4 +1,5 @@
-﻿using Simple_Game_Store_WEB_API.Services.Auth;
+﻿using Simple_Game_Store_WEB_API.Common.Results;
+using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.DTOs.Auth;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
@@ -38,8 +39,8 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     if(loginResult != string.Empty)
                         return Results.Ok($"{loginResult}");
 
-                    loginResult = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
-                    return Results.Ok($"{loginResult}");
+                    Result<string> result = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
+                    return Results.Ok($"{result.value}");
                 }
                 catch (Exception ex)
                 {

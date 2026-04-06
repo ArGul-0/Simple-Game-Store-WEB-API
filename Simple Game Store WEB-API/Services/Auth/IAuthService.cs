@@ -1,4 +1,6 @@
-﻿namespace Simple_Game_Store_WEB_API.Services.Auth
+﻿using Simple_Game_Store_WEB_API.Common.Results;
+
+namespace Simple_Game_Store_WEB_API.Services.Auth
 {
     public interface IAuthService
     {
@@ -9,6 +11,6 @@
         /// <summary>
         /// Register Is Used To Create A New User Account With The Provided Username, Email, And Password. It Validates The Input Data, Ensures That The Username And Email Are Unique, And Stores The User's Credentials In The User Store. After Successful Registration, The User Can Log In Using The Registered Credentials To Access Protected Resources Or Perform Authenticated Actions Within The Application.
         /// </summary>
-        public Task<string> Register(string username, string email, string password);
+        public Task<Result<string>> Register(string username, string email, string password);
     }
 }
