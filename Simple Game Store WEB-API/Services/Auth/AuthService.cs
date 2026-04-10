@@ -16,9 +16,12 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
 
 
 
-        public async Task<string> Login(string email, string password)
+        public async Task<Result<string>> Login(string email, string password)
         {
-            return string.Empty; // Implement The Actual Login Logic Later, This Is Just A Placeholder To Allow The Application To Run Without Errors For Now.
+            if(string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException(nameof(email)); // Soon Create A Custom Exception For This, This Is Just A Placeholder To Allow The Application To Run Without Errors For Now.
+
+            return Result<string>.Failure(new Error("Login Failed", "Invalid email or password.")); // Placeholder For Now, Soon Will Implement The Actual Login Logic That Checks The Credentials Against The Database And Returns A Token If Successful.
         }
 
         public async Task<Result<string>> Register(string username, string email, string password)
@@ -27,12 +30,11 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
                 throw new ArgumentNullException(nameof(username)); // Soon Create A Custom Exception For This, This Is Just A Placeholder To Allow The Application To Run Without Errors For Now.
 
             string hashedPassword = await valueHasher.HashAsync(password); // Hash The Password
-            string hashedEmail = await valueHasher.HashAsync(email); // Hash The Email
 
             User newUser = new User
             {
                 Username = username,
-                HashedEmail = hashedEmail,
+                Email = email,
                 HashedPassword = hashedPassword
             };
 

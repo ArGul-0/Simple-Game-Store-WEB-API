@@ -22,6 +22,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 {
                     Result<string> result = await authService.Login(loginUserDTO.Email, loginUserDTO.Password);
 
+
                     return Results.Ok("Login Successful.");
                 }
                 catch (Exception ex)
