@@ -57,6 +57,17 @@ namespace Simple_Game_Store_WEB_API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                         builder.Configuration["JwtOptions:SecretKey"]!)), // Use A Symmetric Security Key Derived From The Secret Key In Configuration
                 };
+
+                options.Events = new JwtBearerEvents // Configure JWT Bearer Events For Better Error Handling
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies[builder.Configuration["JwtOptions:NameInCookies"]!];
+
+
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             builder.Services.AddAuthorization(); // Add Services To The Container.

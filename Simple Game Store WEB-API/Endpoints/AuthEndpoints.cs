@@ -31,7 +31,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(LoginEndpointName);
 
             // Register Endpoint
-            app.MapPost("/Register", async (RegisterUserDTO registerUserDTO, IAuthService authService, HttpContent httpContent) =>
+            app.MapPost("/Register", async (RegisterUserDTO registerUserDTO, IAuthService authService, HttpContext httpContext, IConfiguration configuration) =>
             {
                 try
                 {
@@ -49,7 +49,9 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                         };
                     }
 
-                    return Results.Ok($"{result.value}");
+                    httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, result.value); // Set The JWT Token In Cookies
+
+                    return Results.Ok();
                 }
                 catch (Exception ex)
                 {
