@@ -52,7 +52,9 @@ namespace Simple_Game_Store_WEB_API
                 options.TokenValidationParameters = new TokenValidationParameters // Configure Token Validation Parameters
                 {
                     ValidateIssuer = true, // Enable Issuer Validation To Ensure Token Is Issued By A Trusted Authority
+                    ValidIssuer = builder.Configuration["JwtOptions:Issuer"], // Set The Valid Issuer To The Value From Configuration
                     ValidateAudience = true, // Enable Audience Validation To Ensure Token Is Intended For This API
+                    ValidAudience = builder.Configuration["JwtOptions:Audience"], // Set The Valid Audience To The Value From Configuration
                     ValidateLifetime = true, // Enable Lifetime Validation To Ensure Tokens Expire
                     ValidateIssuerSigningKey = true, // Enable Issuer Signing Key Validation To Ensure Token Integrity
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
