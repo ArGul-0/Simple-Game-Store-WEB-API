@@ -51,7 +51,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                     httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, result.value); // Set The JWT Token In Cookies
 
-                    return Results.Ok();
+                    return Results.Ok("Registration Successful.");
                 }
                 catch (Exception ex)
                 {
