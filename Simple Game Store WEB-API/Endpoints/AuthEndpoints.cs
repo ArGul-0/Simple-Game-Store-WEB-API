@@ -20,7 +20,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             {
                 try
                 {
-                    await authService.Login(loginUserDTO.Username, loginUserDTO.Password);
+                    Result<string> result = await authService.Login(loginUserDTO.Username, loginUserDTO.Password);
 
                     return Results.Ok("Login Successful.");
                 }
@@ -35,9 +35,12 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             {
                 try
                 {
-                    var loginResult = await authService.Login(registerUserDTO.Username, registerUserDTO.Password); // Optional: Check If User Already Exists Before Registering
-                    if(loginResult != string.Empty)
-                        return Results.Ok($"{loginResult}");
+                    Result<string> loginResult = await authService.Login(registerUserDTO.Username, registerUserDTO.Password); // Optional: Check If User Already Exists Before Registering
+                    if(loginResult.IsSuccess)
+                    {
+                        httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, loginResult.value); // Set The JWT Token In Cookies If User Already Exists
+                        return Results.Ok("User Already Exists. Logged In Successfully.");
+                    }
 
                     Result<string> result = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
                     if(result.IsFailure)
