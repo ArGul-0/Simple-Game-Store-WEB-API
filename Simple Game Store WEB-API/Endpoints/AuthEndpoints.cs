@@ -20,7 +20,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             {
                 try
                 {
-                    Result<string> result = await authService.Login(loginUserDTO.Username, loginUserDTO.Password);
+                    Result<string> result = await authService.Login(loginUserDTO.Email, loginUserDTO.Password);
 
                     return Results.Ok("Login Successful.");
                 }
