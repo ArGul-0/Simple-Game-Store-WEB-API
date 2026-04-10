@@ -85,7 +85,8 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
-            }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>(); // Add Validation Filter
+            }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>() // Add Validation Filter
+            .RequireAuthorization(); // Require Authorization For Updating Games, Only Authenticated Users Can Update Games
 
             // Delete Game
             gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
@@ -95,7 +96,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 .ExecuteDeleteAsync();
 
                 return affected == 0 ? Results.NotFound() : Results.NoContent();
-            }).WithName(DeleteGameEndpointName);
+            }).WithName(DeleteGameEndpointName).RequireAuthorization(); // Require Authorization For Deleting Games, Only Authenticated Users Can Delete Games
 
             return gamesGroup; // Return The Group For Further Configuration If Needed
         }

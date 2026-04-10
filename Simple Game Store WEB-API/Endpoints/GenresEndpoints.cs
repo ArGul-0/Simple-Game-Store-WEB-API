@@ -62,7 +62,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.CreatedAtRoute(GetGenreByIDEndpointName, new { ID = newGenre.ID }, genreMapper.ToDTO(newGenre));
-            }).WithName(CreateGenreEndpointName);
+            }).WithName(CreateGenreEndpointName).RequireAuthorization(); // Require Authorization For Creating Genres, Only Authenticated Users Can Create Genres
 
             // Update Genre
             genresGroup.MapPut("/{ID}", async (int ID, UpdateGenreDTO updatedGenreDTO, GameStoreContext dbContext, IGenreMapper genreMapper) =>
@@ -79,7 +79,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
-            }).WithName(UpdateGenreEndpointName);
+            }).WithName(UpdateGenreEndpointName).RequireAuthorization(); // Require Authorization For Updating Genres, Only Authenticated Users Can Update Genres
 
             // Delete Genre
             genresGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
@@ -93,7 +93,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 .ExecuteDeleteAsync();
 
                 return affected == 0 ? Results.NotFound() : Results.NoContent();
-            }).WithName(DeleteGenreEndpointName);
+            }).WithName(DeleteGenreEndpointName).RequireAuthorization(); // Require Authorization For Deleting Genres, Only Authenticated Users Can Delete Genres
 
             return genresGroup; // Return The Group For Further Configuration If Needed
         }
