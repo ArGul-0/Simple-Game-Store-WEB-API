@@ -1,6 +1,7 @@
 ﻿using Simple_Game_Store_WEB_API.Common.Results;
 using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.DTOs.Auth;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -16,19 +17,22 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // Login Endpoint
-            app.MapPost("/Login", async (LoginUserDTO loginUserDTO, IAuthService authService) =>
+            app.MapPost("/Login", async (LoginUserDTO loginUserDTO, IAuthService authService, HttpContext httpContext, IConfiguration configuration) =>
             {
                 try
                 {
-                    Result<string> result = await authService.Login(loginUserDTO.Email, loginUserDTO.Password);
-                    if(result.IsFailure)
+                    Result<string> loginResult = await authService.Login(loginUserDTO.Email, loginUserDTO.Password);
+                    if(loginResult.IsFailure)
                     {
-                        return result.Error.Code switch
+                        return loginResult.Error.Code switch
                         {
-                            "InvalidCredentials" => Results.BadRequest(result.Error.Description), // Invalid Credentials Error
-                            _ => Results.BadRequest(result.Error.Description)
+                            "InvalidCredentials" => Results.BadRequest(loginResult.Error.Description), // Invalid Credentials Error
+                            
+                            _ => Results.BadRequest(loginResult.Error.Description)
                         };
                     }
+
+                    httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, loginResult.value); // Set The JWT Token In Cookies
 
                     return Results.Ok("Login Successful.");
                 }
@@ -50,17 +54,19 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                         return Results.Ok("User Already Exists. Logged In Successfully.");
                     }
 
-                    Result<string> result = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
-                    if(result.IsFailure)
+                    Result<string> registrationResult = await authService.Register(registerUserDTO.Username, registerUserDTO.Email, registerUserDTO.Password);
+                    if(registrationResult.IsFailure)
                     {
-                        return result.Error.Code switch
+                        return registrationResult.Error.Code switch
                         {
-                            "InvalidCredentials" => Results.BadRequest(result.Error.Description), // Invalid Credentials Error
-                            _ => Results.BadRequest(result.Error.Description)
+                            "InvalidCredentials" => Results.BadRequest(registrationResult.Error.Description),
+                            "UserAlreadyExists" => Results.BadRequest(registrationResult.Error.Description),
+
+                            _ => Results.BadRequest(registrationResult.Error.Description)
                         };
                     }
 
-                    httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, result.value); // Set The JWT Token In Cookies
+                    httpContext.Response.Cookies.Append(configuration["JwtOptions:NameInCookies"]!, registrationResult.value); // Set The JWT Token In Cookies
 
                     return Results.Ok("Registration Successful.");
                 }
