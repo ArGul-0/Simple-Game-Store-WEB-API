@@ -3,6 +3,7 @@ using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Endpoints;
 using Simple_Game_Store_WEB_API.Mappers;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.IdentityModel.Tokens;
 using Simple_Game_Store_WEB_API.DTOs;
 using Simple_Game_Store_WEB_API.Data;
@@ -99,6 +100,15 @@ namespace Simple_Game_Store_WEB_API
 
             app.UseAuthentication(); // Enable Authentication Middleware
             app.UseAuthorization(); // Enable Authorization Middleware
+
+            app.UseCookiePolicy(
+                new CookiePolicyOptions
+                {
+                    HttpOnly = HttpOnlyPolicy.Always, // Set Cookies To HttpOnly For Security
+                    Secure = CookieSecurePolicy.Always, // Set Cookies To Secure For Security
+                    MinimumSameSitePolicy = SameSiteMode.Strict // Set SameSite Policy To Strict For Security
+                }
+            );
 
 
 
