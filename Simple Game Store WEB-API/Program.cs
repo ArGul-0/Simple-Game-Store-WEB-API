@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Simple_Game_Store_WEB_API.Services.Games;
 using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Endpoints;
@@ -44,6 +45,8 @@ namespace Simple_Game_Store_WEB_API
             builder.Services.AddScoped<ITokenService, TokenService>(); // Register TokenService, Scoped Lifetime
 
             builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped Lifetime
+
+            builder.Services.AddScoped<IGamesService, GamesService>(); // Register GamesService, Scoped Lifetime
 
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Add Authentication Services With JWT Bearer Scheme
