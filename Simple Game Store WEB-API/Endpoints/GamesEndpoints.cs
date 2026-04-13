@@ -1,4 +1,6 @@
-﻿using Simple_Game_Store_WEB_API.Validators;
+﻿using Simple_Game_Store_WEB_API.Services.Games;
+using Simple_Game_Store_WEB_API.Common.Results;
+using Simple_Game_Store_WEB_API.Validators;
 using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
@@ -55,16 +57,14 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetGameByIDEndpointName);
 
             // Create Game
-            gamesGroup.MapPost("/", async (CreateGameDTO newGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapPost("/", async (CreateGameDTO newGameDTO, IGamesService gamesService) =>
             {
-                Game game = gameMapper.ToEntity(newGame);
-                game.Genre = await dbContext.Genres.FindAsync(newGame.GenreID);
+                Result<GameDetailsDTO> result = await gamesService.CreateGameAsync(newGameDTO);
 
-                dbContext.Games.Add(game);
+                if(result.IsFailure)
+                    return Results.BadRequest(result.Error.Description);
 
-                await dbContext.SaveChangesAsync();
-
-                return Results.CreatedAtRoute(GetGameByIDEndpointName, new { ID = game.ID }, gameMapper.ToDetailsDTO(game));
+                return Results.CreatedAtRoute(GetGameByIDEndpointName, new {id = result.value.ID} , result.value);
             }).WithName(CreateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<CreateGameDTO>>() // Add Validation Filter
             .RequireAuthorization(); // Require Authorization For Creating Games, Only Authenticated Users Can Create Games
 
