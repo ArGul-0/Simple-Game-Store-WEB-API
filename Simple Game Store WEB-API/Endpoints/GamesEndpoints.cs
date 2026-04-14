@@ -69,21 +69,10 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             .RequireAuthorization(); // Require Authorization For Creating Games, Only Authenticated Users Can Create Games
 
             // Update Game
-            gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, IGamesService gamesService) =>
             {
-                Game? existingGame = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
-
-                if (existingGame is null)
-                    return Results.NotFound();
-
-                existingGame = gameMapper.ToEntity(updatedGame);
-                existingGame.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
-                existingGame.ID = ID;
-
-                dbContext.Games.Update(existingGame);
-
-                await dbContext.SaveChangesAsync();
-
+                Result result = await gamesService.UpdateGameAsync(ID ,updatedGame);
+     
                 return Results.NoContent();
             }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>() // Add Validation Filter
             .RequireAuthorization(); // Require Authorization For Updating Games, Only Authenticated Users Can Update Games

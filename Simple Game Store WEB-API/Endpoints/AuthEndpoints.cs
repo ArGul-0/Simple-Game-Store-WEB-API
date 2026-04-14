@@ -22,6 +22,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 try
                 {
                     Result<string> loginResult = await authService.Login(loginUserDTO.Email, loginUserDTO.Password);
+                    
                     if(loginResult.IsFailure)
                     {
                         return loginResult.Error.Code switch

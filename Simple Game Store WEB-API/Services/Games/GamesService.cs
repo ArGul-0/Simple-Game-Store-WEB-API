@@ -1,8 +1,9 @@
-﻿using Simple_Game_Store_WEB_API.Common.Results;
-using Simple_Game_Store_WEB_API.Entities;
-using Simple_Game_Store_WEB_API.Mappers;
+﻿using Microsoft.EntityFrameworkCore;
+using Simple_Game_Store_WEB_API.Common.Results;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
+using Simple_Game_Store_WEB_API.Entities;
+using Simple_Game_Store_WEB_API.Mappers;
 
 namespace Simple_Game_Store_WEB_API.Services.Games
 {
@@ -28,13 +29,25 @@ namespace Simple_Game_Store_WEB_API.Services.Games
 
             return Result<GameDetailsDTO>.Success(gameMapper.ToDetailsDTO(game));
         }
-
-        public Task<Result> DeleteGameAsync(int ID)
+        public async Task<Result> UpdateGameAsync(int ID, UpdateGameDTO updatedGame)
         {
-            throw new NotImplementedException();
+            Game? existingGame = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
+
+            //if (existingGame is null)
+            //    return 
+
+            existingGame = gameMapper.ToEntity(updatedGame);
+            existingGame.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
+            existingGame.ID = ID;
+
+            dbContext.Games.Update(existingGame);
+
+            await dbContext.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public Task<Result> UpdateGameAsync(UpdateGameDTO gameDetailsDTO)
+        public Task<Result> DeleteGameAsync(int ID)
         {
             throw new NotImplementedException();
         }
