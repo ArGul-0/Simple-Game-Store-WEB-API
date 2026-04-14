@@ -29,12 +29,24 @@ namespace Simple_Game_Store_WEB_API.Services.Genres
             return Result<GenreDTO>.Success(genreMapper.ToDTO(newGenre));
         }
 
-        public Task<Result> DeleteGenreAsync(int ID)
+        public async Task<Result> UpdateGenreAsync(int ID, UpdateGenreDTO updatedGenreDTO)
         {
-            throw new NotImplementedException();
+            Genre? existingGenre = await dbContext.Genres.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
+
+            if (existingGenre is null)
+                return Result.Failure(GenreErrors.GenreNotFound);
+
+            existingGenre = genreMapper.ToEntity(updatedGenreDTO);
+            existingGenre.ID = ID;
+
+            dbContext.Genres.Update(existingGenre);
+
+            await dbContext.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public Task<Result> UpdateGenreAsync(int ID, UpdateGenreDTO updateGenreDTO)
+        public Task<Result> DeleteGenreAsync(int ID)
         {
             throw new NotImplementedException();
         }

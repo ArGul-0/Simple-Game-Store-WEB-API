@@ -63,18 +63,19 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(CreateGenreEndpointName).RequireAuthorization(); // Require Authorization For Creating Genres, Only Authenticated Users Can Create Genres
 
             // Update Genre
-            genresGroup.MapPut("/{ID}", async (int ID, UpdateGenreDTO updatedGenreDTO, GameStoreContext dbContext, IGenreMapper genreMapper) =>
+            genresGroup.MapPut("/{ID}", async (int ID, UpdateGenreDTO updatedGenreDTO, IGenreService genreService) =>
             {
-                Genre? existingGenre = await dbContext.Genres.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
-                if (existingGenre is null)
-                    return Results.NotFound();
+                Result result = await genreService.UpdateGenreAsync(ID, updatedGenreDTO);
 
-                existingGenre = genreMapper.ToEntity(updatedGenreDTO);
-                existingGenre.ID = ID;
+                if(result.IsFailure)
+                {
+                    return result.Error.Code switch
+                    {
+                        "GenreNotFound" => Results.NotFound(result.Error.Description),
 
-                dbContext.Genres.Update(existingGenre);
-
-                await dbContext.SaveChangesAsync();
+                        _ => Results.BadRequest(result.Error.Description)
+                    };
+                }
 
                 return Results.NoContent();
             }).WithName(UpdateGenreEndpointName).RequireAuthorization(); // Require Authorization For Updating Genres, Only Authenticated Users Can Update Genres
