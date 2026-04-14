@@ -39,7 +39,7 @@ namespace Simple_Game_Store_WEB_API.Services.Games
             existingGame = gameMapper.ToEntity(updatedGame);
             var genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
 
-            if(genre is null)
+            if (genre is null)
                 return Result.Failure(GamesErrors.GenreNotFound);
 
             existingGame.Genre = genre;
@@ -52,9 +52,13 @@ namespace Simple_Game_Store_WEB_API.Services.Games
             return Result.Success();
         }
 
-        public Task<Result> DeleteGameAsync(int ID)
+        public async Task<Result> DeleteGameAsync(int ID)
         {
-            throw new NotImplementedException();
+            var affected = await dbContext.Games.
+                Where(g => g.ID == ID).
+                ExecuteDeleteAsync();
+
+            return affected == 0 ? Result.Failure(GamesErrors.GameNotFound) : Result.Success();
         }
     }
 }

@@ -89,13 +89,21 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             .RequireAuthorization(); // Require Authorization For Updating Games, Only Authenticated Users Can Update Games
 
             // Delete Game
-            gamesGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
+            gamesGroup.MapDelete("/{ID}", async (int ID, IGamesService gamesService) =>
             {
-                var affected = await dbContext.Games
-                .Where(g => g.ID == ID)
-                .ExecuteDeleteAsync();
+                Result result = await gamesService.DeleteGameAsync(ID);
 
-                return affected == 0 ? Results.NotFound() : Results.NoContent();
+                if(result.IsFailure)
+                {
+                    return result.Error.Code switch
+                    {
+                        "GameNotFound" => Results.NotFound(result.Error.Description),
+
+                        _ => Results.BadRequest(result.Error.Description)
+                    };
+                }
+
+                return Results.NoContent();
             }).WithName(DeleteGameEndpointName).RequireAuthorization(); // Require Authorization For Deleting Games, Only Authenticated Users Can Delete Games
 
             return gamesGroup; // Return The Group For Further Configuration If Needed
