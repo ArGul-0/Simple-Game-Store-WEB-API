@@ -1,4 +1,6 @@
-﻿using Simple_Game_Store_WEB_API.Entities;
+﻿using Simple_Game_Store_WEB_API.Services.Genres;
+using Simple_Game_Store_WEB_API.Common.Results;
+using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Mappers;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs;
@@ -53,15 +55,11 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetGenreByIDEndpointName);
 
             // Create Genre
-            genresGroup.MapPost("/", async (CreateGenreDTO createGenreDTO, GameStoreContext dbContext, IGenreMapper genreMapper) =>
+            genresGroup.MapPost("/", async (CreateGenreDTO createGenreDTO, IGenreService genreService) =>
             {
-                Genre newGenre = genreMapper.ToEntity(createGenreDTO);
+                Result<GenreDTO> result = await genreService.CreateGenreAsync(createGenreDTO);
 
-                dbContext.Genres.Add(newGenre);
-
-                await dbContext.SaveChangesAsync();
-
-                return Results.CreatedAtRoute(GetGenreByIDEndpointName, new { ID = newGenre.ID }, genreMapper.ToDTO(newGenre));
+                return Results.CreatedAtRoute(GetGenreByIDEndpointName, new { ID = result.value.ID }, result.value);
             }).WithName(CreateGenreEndpointName).RequireAuthorization(); // Require Authorization For Creating Genres, Only Authenticated Users Can Create Genres
 
             // Update Genre
