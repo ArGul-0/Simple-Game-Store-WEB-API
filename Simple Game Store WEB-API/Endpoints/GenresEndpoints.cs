@@ -81,17 +81,22 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(UpdateGenreEndpointName).RequireAuthorization(); // Require Authorization For Updating Genres, Only Authenticated Users Can Update Genres
 
             // Delete Genre
-            genresGroup.MapDelete("/{ID}", async (int ID, GameStoreContext dbContext) =>
+            genresGroup.MapDelete("/{ID}", async (int ID, IGenreService genreService) =>
             {
-                bool haveGamesWithGenre = await dbContext.Games.AnyAsync(g => g.GenreID == ID);
-                if(haveGamesWithGenre)
-                    return Results.BadRequest("Cannot delete genre because there are games associated with it.");
+                Result result = await genreService.DeleteGenreAsync(ID);
 
-                var affected = await dbContext.Genres
-                .Where(g => g.ID == ID)
-                .ExecuteDeleteAsync();
+                if(result.IsFailure)
+                {
+                    return result.Error.Code switch
+                    {
+                        "GenreNotFound" => Results.NotFound(result.Error.Description),
+                        "GenreHasAssociatedGames" => Results.BadRequest(result.Error.Description),
 
-                return affected == 0 ? Results.NotFound() : Results.NoContent();
+                        _ => Results.BadRequest(result.Error.Description)
+                    };
+                }
+
+                return Results.NoContent();
             }).WithName(DeleteGenreEndpointName).RequireAuthorization(); // Require Authorization For Deleting Genres, Only Authenticated Users Can Delete Genres
 
             return genresGroup; // Return The Group For Further Configuration If Needed

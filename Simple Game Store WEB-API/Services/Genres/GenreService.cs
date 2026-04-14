@@ -46,9 +46,17 @@ namespace Simple_Game_Store_WEB_API.Services.Genres
             return Result.Success();
         }
 
-        public Task<Result> DeleteGenreAsync(int ID)
+        public async Task<Result> DeleteGenreAsync(int ID)
         {
-            throw new NotImplementedException();
+            bool haveGamesWithGenre = await dbContext.Games.AnyAsync(g => g.GenreID == ID);
+            if (haveGamesWithGenre)
+                return Result.Failure(GenreErrors.GenreHasAssociatedGames);
+
+            var affected = await dbContext.Genres
+            .Where(g => g.ID == ID)
+            .ExecuteDeleteAsync();
+
+            return affected == 0 ? Result.Failure(GenreErrors.GenreNotFound) : Result.Success();
         }
     }
 }
