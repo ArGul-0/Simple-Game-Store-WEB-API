@@ -72,7 +72,18 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             gamesGroup.MapPut("/{ID}", async (int ID, UpdateGameDTO updatedGame, IGamesService gamesService) =>
             {
                 Result result = await gamesService.UpdateGameAsync(ID ,updatedGame);
-     
+
+                if(result.IsFailure)
+                {
+                    return result.Error.Code switch
+                    {
+                        "GameNotFound" => Results.NotFound(result.Error.Description),
+                        "GenreNotFound" => Results.NotFound(result.Error.Description),
+
+                        _ => Results.BadRequest(result.Error.Description)
+                    };
+                }
+
                 return Results.NoContent();
             }).WithName(UpdateGameEndpointName).AddEndpointFilter<FluentValidationEndpointFilter<UpdateGameDTO>>() // Add Validation Filter
             .RequireAuthorization(); // Require Authorization For Updating Games, Only Authenticated Users Can Update Games

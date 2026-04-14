@@ -33,11 +33,16 @@ namespace Simple_Game_Store_WEB_API.Services.Games
         {
             Game? existingGame = await dbContext.Games.AsNoTracking().FirstOrDefaultAsync(g => g.ID == ID);
 
-            //if (existingGame is null)
-            //    return 
+            if (existingGame is null)
+                return Result.Failure(GamesErrors.GameNotFound);
 
             existingGame = gameMapper.ToEntity(updatedGame);
-            existingGame.Genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
+            var genre = await dbContext.Genres.FindAsync(updatedGame.GenreID);
+
+            if(genre is null)
+                return Result.Failure(GamesErrors.GenreNotFound);
+
+            existingGame.Genre = genre;
             existingGame.ID = ID;
 
             dbContext.Games.Update(existingGame);
