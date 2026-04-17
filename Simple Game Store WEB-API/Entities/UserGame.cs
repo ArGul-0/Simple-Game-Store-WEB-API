@@ -2,12 +2,14 @@
 {
     public class UserGame
     {
-        public required int LibraryID { get; set; }
-        public required UserLibrary UserLibrary { get; set; }
+        public int ID { get; set; }
 
-        public required int GameID { get; set; }
+        public int LibraryID { get; set; }
+        public UserLibrary UserLibrary { get; set; } = null!;
+
+        public int GameID { get; set; }
         public required Game Game { get; set; }
 
-        public DateTime PurchasedAt { get; set; }
+        public required DateTime PurchasedAt { get; set; }
     }
 }

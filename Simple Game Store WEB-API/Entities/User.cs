@@ -7,11 +7,6 @@
         public required string Email { get; set; }
         public required string HashedPassword { get; set; }
 
-        public UserLibrary UserLibrary { get; set; }
-
-        public User()
-        {
-            UserLibrary = new UserLibrary { OwnerUser = this };
-        }
+        public UserLibrary UserLibrary { get; set; } = null!;
     }
 }

@@ -3,7 +3,8 @@
     public class UserLibrary // UserLibrary Entity Class - Represents A User's Game Library
     {
         public int ID { get; set; }
-        public required User OwnerUser { get; set; }
+        public int UserID { get; set; }
+        public User OwnerUser { get; set; } = null!;
         public List<UserGame> Games { get; set; } = new List<UserGame>();
     }
 }
