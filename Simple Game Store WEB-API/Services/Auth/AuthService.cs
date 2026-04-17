@@ -51,7 +51,9 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
             {
                 Username = username,
                 Email = email,
-                HashedPassword = hashedPassword
+                HashedPassword = hashedPassword,
+
+                UserLibrary = new() // Create A New User Library For The New User (use target-typed new to avoid type-name conflicts)
             };
 
             await dbContext.Users.AddAsync(newUser); // Add The New User To The Database
