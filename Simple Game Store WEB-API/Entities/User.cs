@@ -7,6 +7,7 @@
         public required string Email { get; set; }
         public required string HashedPassword { get; set; }
 
+        public int UserLibraryId { get; set; }
         public UserLibrary UserLibrary { get; set; } = null!;
     }
 }
