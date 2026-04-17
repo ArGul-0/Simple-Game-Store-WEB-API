@@ -8,6 +8,7 @@ namespace Simple_Game_Store_WEB_API.Data
         public DbSet<Game> Games => Set<Game>(); // DbSet For Games Entity
         public DbSet<Genre> Genres => Set<Genre>(); // DbSet For Genres Entity
         public DbSet<User> Users => Set<User>(); // DbSet For Users Entity
+        public DbSet<UserLibrary> UserLibraries => Set<UserLibrary>(); // DbSet For UserLibraries Entity
 
 
 
