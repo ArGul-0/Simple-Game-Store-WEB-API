@@ -40,7 +40,7 @@ User-friendly Web UI interface for interacting with Web APIs (using Swagger).
 - **ORM:** Entity Framework Core (migrations included)  
 - **Containerization:** Docker (multi-stage Dockerfile)  
 - **Orchestration:** Docker Compose (dev & prod files)  
-- **API:** RESTful CRUD for `Games`, read-only `Genres`  
+- **API:** RESTful CRUD for `Games`, RESTful CRUD for `Genres`, `Register` And `Login` and `User Game Library` System (Soon)  
 - **Operational:** `/health` endpoint, Docker healthchecks, multi-stage build for small runtime image
 
 ---
