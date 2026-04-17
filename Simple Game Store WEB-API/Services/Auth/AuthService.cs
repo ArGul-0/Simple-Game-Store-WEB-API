@@ -47,13 +47,16 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
 
             string hashedPassword = await valueHasher.HashAsync(password); // Hash The Password
 
+            UserLibrary newLibrary = new UserLibrary(); // Create A New User Library
             User newUser = new User
             {
                 Username = username,
                 Email = email,
-                HashedPassword = hashedPassword
+                HashedPassword = hashedPassword,
+                UserLibraryID = newLibrary.ID
             };
 
+            await dbContext.UserLibraries.AddAsync(newLibrary); // Add The New User Library To The Database
             await dbContext.Users.AddAsync(newUser); // Add The New User To The Database
             await dbContext.SaveChangesAsync(); // Save Changes To The Database
 
