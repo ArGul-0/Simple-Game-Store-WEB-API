@@ -24,7 +24,9 @@ The repository is designed for realistic deployments using **immutable Docker im
 **What the API exposes (short):**
 
 - RESTful CRUD for Games (Create / Read / Update / Delete).
-- Read-only list for Genres (seeded).
+- RESTful CRUD for Genres (seeded).
+- Register And Login Logic (JWT In Cookies)
+- User Game Library System (Soon)
 - /health — readiness of Web API.
 
 User-friendly Web UI interface for interacting with Web APIs (using Swagger).
