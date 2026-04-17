@@ -14,6 +14,17 @@ namespace Simple_Game_Store_WEB_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Configure Model Creation
         {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserLibrary) // Configure One-to-One Relationship Between User And UserLibrary
+                .WithOne(ul => ul.OwnerUser)
+                .HasForeignKey<UserLibrary>(ul => ul.UserID);
+
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.UserLibrary)
+            .WithOne(ul => ul.OwnerUser)
+            .HasForeignKey<UserLibrary>(ul => ul.UserID)
+            .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Genre>().HasData( // Seed Initial Data For Genres
             new Genre { ID = 1, Name = "Action-Adventure" },
             new Genre { ID = 2, Name = "Management" },
