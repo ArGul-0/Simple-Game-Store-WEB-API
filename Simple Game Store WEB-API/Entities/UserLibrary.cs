@@ -2,8 +2,8 @@
 {
     public class UserLibrary // UserLibrary Entity Class - Represents A User's Game Library
     {
-        public required int ID { get; set; }
-        public required User Owner { get; set; }
-        public required List<Game> Games { get; set; }
+        public int ID { get; set; }
+        public required int OwnerID { get; set; }
+        public required List<Game> Games = new List<Game>();
     }
 }

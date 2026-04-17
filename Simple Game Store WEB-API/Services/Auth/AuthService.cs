@@ -51,7 +51,8 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
             {
                 Username = username,
                 Email = email,
-                HashedPassword = hashedPassword
+                HashedPassword = hashedPassword,
+                Library = new UserLibrary { OwnerID = 0, Games = new() } // Initialize The User's Library (OwnerID will be set by the DB after save)
             };
 
             await dbContext.Users.AddAsync(newUser); // Add The New User To The Database
