@@ -4,6 +4,6 @@
     {
         public int ID { get; set; }
         public required int OwnerID { get; set; }
-        public required List<Game> Games = new List<Game>();
+        public List<Game> Games = new List<Game>();
     }
 }

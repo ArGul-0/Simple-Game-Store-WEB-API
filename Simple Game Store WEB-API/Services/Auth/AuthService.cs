@@ -52,10 +52,16 @@ namespace Simple_Game_Store_WEB_API.Services.Auth
                 Username = username,
                 Email = email,
                 HashedPassword = hashedPassword,
-                Library = new UserLibrary { OwnerID = 0, Games = new() } // Initialize The User's Library (OwnerID will be set by the DB after save)
+                UserLibraryID = Guid.NewGuid().ToString() // Generate A Unique ID For The User's Library
+            };
+            UserLibrary newLibrary = new UserLibrary
+            {
+                ID = newUser.UserLibraryID,
+                OwnerID = newUser.ID
             };
 
             await dbContext.Users.AddAsync(newUser); // Add The New User To The Database
+            await dbContext.UserLibraries.AddAsync(newLibrary); // Add The New User's Library To The Database
             await dbContext.SaveChangesAsync(); // Save Changes To The Database
 
             string token = tokenService.GenerateAccessToken(newUser); // Generate Access Token For The New User
