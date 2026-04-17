@@ -10,11 +10,29 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         {
             var usersGroup = app.MapGroup("/Users/"); // Create A Group For /Users Endpoints
 
+
+
+            // Endpoint To Get The Current User's ID From The JWT Token
             usersGroup.MapGet("/GetMyID", async (HttpContext httpContext) =>
             {
                 return Results.Ok(int.Parse(httpContext.User.FindFirst("userID")?.Value ?? "0"));
             }).RequireAuthorization();
 
+            // Get All User's Games From Library
+            usersGroup.MapGet("/GetMyGames", async (GameStoreContext dbContext, HttpContext httpContext) =>
+            {
+
+            }).RequireAuthorization();
+
+            // Add A Game To The Current User's Library
+            usersGroup.MapPost("/AddGameToLibrary", async (int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            {
+            }).RequireAuthorization();
+
+            // Remove A Game From The Current User's Library
+            usersGroup.MapDelete("/RemoveGameFromLibrary", async (int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            {
+            }).RequireAuthorization();
 
             return usersGroup; // Return The Group For Further Configuration If Needed
         }
