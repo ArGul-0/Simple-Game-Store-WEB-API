@@ -122,7 +122,7 @@ namespace Simple_Game_Store_WEB_API
             app.MapGamesEndpoints(); // Map Games Endpoints
             app.MapGenresEndpoints(); // Map Genres Endpoints
             app.MapAuthEndpoints(); // Map Auth Endpoints
-            app.MapUserEndpoints(); // Map User Library Endpoints
+            app.MapUsersEndpoints(); // Map User Library Endpoints
 
             app.MapGet("/health", () => Results.Ok("Healthy!")); // Health Check Endpoint
 
