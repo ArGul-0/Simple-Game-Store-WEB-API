@@ -1,7 +1,6 @@
 ﻿using Simple_Game_Store_WEB_API.Common.Results;
-using Simple_Game_Store_WEB_API.Services.Auth;
 using Simple_Game_Store_WEB_API.DTOs.Auth;
-using Microsoft.EntityFrameworkCore;
+using Simple_Game_Store_WEB_API.Services.Auth;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
