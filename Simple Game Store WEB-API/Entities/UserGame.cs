@@ -1,6 +1,6 @@
 ﻿namespace Simple_Game_Store_WEB_API.Entities
 {
-    public class UserGame
+    public class UserGame // UserGame Entity Class - Represents A Game Owned By A User In Their Library
     {
         public int ID { get; set; }
 
