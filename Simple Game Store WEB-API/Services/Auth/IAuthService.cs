@@ -1,5 +1,4 @@
 ﻿using Simple_Game_Store_WEB_API.Common.Results;
-using Simple_Game_Store_WEB_API.Data;
 
 namespace Simple_Game_Store_WEB_API.Services.Auth
 {
