@@ -19,18 +19,18 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).RequireAuthorization();
 
             // Get All User's Games From Library
-            usersGroup.MapGet("/GetMyGames", async (GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapGet("/{userID}/GetGamesFromLibrary", async (int id, GameStoreContext dbContext, HttpContext httpContext) =>
             {
 
             }).RequireAuthorization();
 
             // Add A Game To The Current User's Library
-            usersGroup.MapPost("/AddGameToLibrary", async (int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapPost("/{userID}/AddGameToLibrary", async (int userID, int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
             {
             }).RequireAuthorization();
 
             // Remove A Game From The Current User's Library
-            usersGroup.MapDelete("/RemoveGameFromLibrary", async (int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapDelete("/{userID}/RemoveGameFromLibrary", async (int userID, int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
             {
             }).RequireAuthorization();
 
