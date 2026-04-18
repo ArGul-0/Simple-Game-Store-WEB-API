@@ -10,9 +10,9 @@ namespace Simple_Game_Store_WEB_API.Services.Genres
     public class GenreService : IGenreService
     {
         private readonly GameStoreContext dbContext;
-        private readonly IGenreMapper genreMapper;
+        private readonly IGenresMapper genreMapper;
 
-        public GenreService(GameStoreContext dbContext, IGenreMapper genreMapper)
+        public GenreService(GameStoreContext dbContext, IGenresMapper genreMapper)
         {
             this.dbContext = dbContext;
             this.genreMapper = genreMapper;

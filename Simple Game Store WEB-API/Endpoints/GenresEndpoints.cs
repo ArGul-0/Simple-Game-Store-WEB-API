@@ -34,7 +34,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // GET All Genres
-            genresGroup.MapGet("/", async (GameStoreContext dbContext, IGenreMapper genreMapper) =>
+            genresGroup.MapGet("/", async (GameStoreContext dbContext, IGenresMapper genreMapper) =>
             {
                 var genres = await dbContext.Genres
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
@@ -45,7 +45,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetAllGenresEndpointName);
 
             // Get Genre
-            genresGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGenreMapper genreMapper) =>
+            genresGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGenresMapper genreMapper) =>
             {
                 Genre? genre = await dbContext.Genres
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance

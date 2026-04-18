@@ -35,7 +35,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
 
             // Get All Games
-            gamesGroup.MapGet("/", async (GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapGet("/", async (GameStoreContext dbContext, IGamesMapper gameMapper) =>
             {
                 var games = await dbContext.Games
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance
@@ -47,7 +47,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).WithName(GetAllGamesEndpointName);
 
             // Get Game
-            gamesGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGameMapper gameMapper) =>
+            gamesGroup.MapGet("/{ID}", async (int ID, GameStoreContext dbContext, IGamesMapper gameMapper) =>
             {
                 Game? game = await dbContext.Games
                     .AsNoTracking() // Avoid Tracking For Read-Only Operation, Improves Performance

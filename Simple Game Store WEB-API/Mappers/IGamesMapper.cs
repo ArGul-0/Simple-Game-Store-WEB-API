@@ -3,7 +3,7 @@ using Simple_Game_Store_WEB_API.DTOs;
 
 namespace Simple_Game_Store_WEB_API.Mappers
 {
-    public interface IGameMapper
+    public interface IGamesMapper
     {
         /// <summary>
         /// Converts CreateGameDTO To Game Entity

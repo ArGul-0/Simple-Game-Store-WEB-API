@@ -10,9 +10,9 @@ namespace Simple_Game_Store_WEB_API.Services.Games
     public class GamesService : IGamesService
     {
         private readonly GameStoreContext dbContext;
-        private readonly IGameMapper gameMapper;
+        private readonly IGamesMapper gameMapper;
 
-        public GamesService(GameStoreContext dbContext, IGameMapper gameMapper)
+        public GamesService(GameStoreContext dbContext, IGamesMapper gameMapper)
         {
             this.dbContext = dbContext;
             this.gameMapper = gameMapper;

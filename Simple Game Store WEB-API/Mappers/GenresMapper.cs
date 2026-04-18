@@ -3,7 +3,7 @@ using Simple_Game_Store_WEB_API.DTOs;
 
 namespace Simple_Game_Store_WEB_API.Mappers
 {
-    public class GenreMapper : IGenreMapper
+    public class GenresMapper : IGenresMapper
     {
         public Genre ToEntity(CreateGenreDTO createGenreDTO) // Converts CreateGenreDTO To Genre Entity
         {

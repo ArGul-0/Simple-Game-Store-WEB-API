@@ -1,6 +1,9 @@
-﻿using Simple_Game_Store_WEB_API.Common.Results;
+﻿using Microsoft.EntityFrameworkCore;
 using Simple_Game_Store_WEB_API.Data;
+using Simple_Game_Store_WEB_API.DTOs;
+using Simple_Game_Store_WEB_API.DTOs.Users;
 using Simple_Game_Store_WEB_API.Entities;
+using Simple_Game_Store_WEB_API.Mappers;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -19,10 +22,36 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).RequireAuthorization();
 
             // Get All User's Games From Library
-            usersGroup.MapGet("/{userID}/GetGamesFromLibrary", async (int userID, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapGet("/{userID}/GetGamesFromLibrary", async (int userID, GameStoreContext dbContext, IUsersMapper usersMapper, HttpContext httpContext) =>
             {
+                User? user = await dbContext.Users.FindAsync(userID);
 
-                return Results.Ok("Plaseholder");
+                if (user is null)
+                    return Results.NotFound("User not found");
+
+                var userLibrary = await dbContext.UserLibraries
+                    .AsNoTracking()
+                    .Where(ul => ul.UserID == userID)
+                    .FirstOrDefaultAsync(ul => ul.UserID == userID);
+
+                // For Test We Added Game, Soon Delete It.
+                var gameEntity = await dbContext.Games.FirstOrDefaultAsync();
+                if (gameEntity != null)
+                {
+                    var gameDto = new GameDetailsDTO(
+                        ID: gameEntity.ID,
+                        Name: gameEntity.Name,
+                        GenreID: gameEntity.GenreID,
+                        Price: gameEntity.Price,
+                        ReleaseDate: gameEntity.ReleaseDate
+                    );
+
+                    userLibrary.Games.Add(new UserGame { Game = gameDto, PurchasedAt = DateTime.UtcNow });
+                }
+
+                List<UserGameDTO> games = userLibrary.Games.Select(ug => usersMapper.ToDTO(ug)).ToList();
+
+                return Results.Ok(games);
             }).RequireAuthorization();
 
             // Add A Game To The Current User's Library
