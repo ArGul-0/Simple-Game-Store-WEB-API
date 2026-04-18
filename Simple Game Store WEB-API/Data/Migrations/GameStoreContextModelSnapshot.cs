@@ -22,6 +22,32 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Simple_Game_Store_WEB_API.DTOs.GameDetailsDTO", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("GenreID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateOnly>("ReleaseDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("GameDetailsDTO");
+                });
+
             modelBuilder.Entity("Simple_Game_Store_WEB_API.Entities.Game", b =>
                 {
                     b.Property<int>("ID")
@@ -263,7 +289,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
             modelBuilder.Entity("Simple_Game_Store_WEB_API.Entities.UserGame", b =>
                 {
-                    b.HasOne("Simple_Game_Store_WEB_API.Entities.Game", "Game")
+                    b.HasOne("Simple_Game_Store_WEB_API.DTOs.GameDetailsDTO", "Game")
                         .WithMany()
                         .HasForeignKey("GameID")
                         .OnDelete(DeleteBehavior.Cascade)

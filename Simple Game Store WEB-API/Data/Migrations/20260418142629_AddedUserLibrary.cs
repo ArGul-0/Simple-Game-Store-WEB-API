@@ -13,6 +13,22 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "GameDetailsDTO",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    GenreID = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameDetailsDTO", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserLibraries",
                 columns: table => new
                 {
@@ -46,9 +62,9 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                 {
                     table.PrimaryKey("PK_UserGame", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserGame_Games_GameID",
+                        name: "FK_UserGame_GameDetailsDTO_GameID",
                         column: x => x.GameID,
-                        principalTable: "Games",
+                        principalTable: "GameDetailsDTO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -81,6 +97,9 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "UserGame");
+
+            migrationBuilder.DropTable(
+                name: "GameDetailsDTO");
 
             migrationBuilder.DropTable(
                 name: "UserLibraries");
