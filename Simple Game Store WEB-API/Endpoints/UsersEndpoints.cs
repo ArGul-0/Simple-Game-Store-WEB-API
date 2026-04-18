@@ -19,7 +19,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).RequireAuthorization();
 
             // Get All User's Games From Library
-            usersGroup.MapGet("/{userID}/GetGamesFromLibrary", async (int id, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapGet("/{userID}/GetGamesFromLibrary", async (int userID, GameStoreContext dbContext, HttpContext httpContext) =>
             {
 
             }).RequireAuthorization();
