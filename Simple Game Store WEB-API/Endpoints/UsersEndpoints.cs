@@ -34,22 +34,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                     .Where(ul => ul.UserID == userID)
                     .FirstOrDefaultAsync(ul => ul.UserID == userID);
 
-                // For Test We Added Game, Soon Delete It.
-                var gameEntity = await dbContext.Games.FirstOrDefaultAsync();
-                if (gameEntity != null)
-                {
-                    var gameDto = new GameDetailsDTO(
-                        ID: gameEntity.ID,
-                        Name: gameEntity.Name,
-                        GenreID: gameEntity.GenreID,
-                        Price: gameEntity.Price,
-                        ReleaseDate: gameEntity.ReleaseDate
-                    );
-
-                    userLibrary.Games.Add(new UserGame { Game = gameDto, PurchasedAt = DateTime.UtcNow });
-                }
-
-                List<UserGameDTO> games = userLibrary.Games.Select(ug => usersMapper.ToDTO(ug)).ToList();
+                List<UserGameDTO> games = userLibrary!.Games.Select(ug => usersMapper.ToDTO(ug)).ToList();
 
                 return Results.Ok(games);
             }).RequireAuthorization();
