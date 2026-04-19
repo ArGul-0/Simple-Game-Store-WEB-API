@@ -70,10 +70,25 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             }).RequireAuthorization();
 
             // Remove A Game From The Current User's Library
-            usersGroup.MapDelete("/{userID}/RemoveGameFromLibrary", async (int userID, int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapDelete("/{userID}/RemoveGameFromLibrary", async (int userID, int gameID, IUserService userService, HttpContext httpContext) =>
             {
+                if (userID != int.Parse(httpContext.User.FindFirst("userID")?.Value ?? "0"))
+                    return Results.Forbid();
 
-                return Results.Ok("Plaseholder");
+                Result result = await userService.RemoveGameFromUserLibraryAsync(userID, gameID); 
+            
+            if(result.IsFailure)
+            {
+                return result.Error.Code switch
+                {
+                    "UserNotFound" => Results.NotFound(result.Error.Description),
+                    "GameNotFound" => Results.NotFound(result.Error.Description),
+
+                    _ => Results.BadRequest("An Unknown Error Occurred While Removing The Game From The User's Library")
+                };
+            }
+
+            return Results.Ok();
             }).RequireAuthorization();
 
             return usersGroup; // Return The Group For Further Configuration If Needed
