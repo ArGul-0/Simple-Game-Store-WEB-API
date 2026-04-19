@@ -9,6 +9,14 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         const string LoginEndpointName = "Login"; // Constant For The Login Endpoint Name
         const string RegisterEndpointName = "Register"; // Constant For The Register Endpoint Name
 
+        /// <summary>
+        /// Maps The Authentication Endpoints To The Web Application
+        /// </summary>
+        /// <remarks>
+        /// This Method Sets Up The Following Endpoints Under The /Auth Route:
+        /// - POST /Auth/Login: Authenticate A User
+        /// - POST /Auth/Register: Register A New User
+        /// </remarks>
         public static RouteGroupBuilder MapAuthEndpoints(this WebApplication app)
         {
             var authGroup = app.MapGroup("/Auth"); // Create A Group For /Auth Endpoints
