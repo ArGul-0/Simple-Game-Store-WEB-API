@@ -10,12 +10,10 @@ namespace Simple_Game_Store_WEB_API.Services.UserLibrary
     public class UsersService : IUserService
     {
         private readonly GameStoreContext dbContext;
-        private readonly IGamesMapper gamesMapper;
 
         public UsersService(GameStoreContext dbContext, IGamesMapper gamesMapper)
         {
             this.dbContext = dbContext;
-            this.gamesMapper = gamesMapper;
         }
 
         public async Task<Result> AddGameToUserLibraryAsync(int userID, int gameID)
