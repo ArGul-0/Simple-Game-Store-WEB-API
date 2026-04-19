@@ -12,8 +12,8 @@ using Simple_Game_Store_WEB_API.Data;
 namespace Simple_Game_Store_WEB_API.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    [Migration("20260419022351_AddedUserLibraryPlusFixes")]
-    partial class AddedUserLibraryPlusFixes
+    [Migration("20260419025608_AddedUserLibrary")]
+    partial class AddedUserLibrary
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,9 +216,6 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                     b.Property<int>("GameID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("LibraryID")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("PurchasedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -231,7 +228,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
                     b.HasIndex("UserLibraryID");
 
-                    b.ToTable("UserGame");
+                    b.ToTable("UserGames");
                 });
 
             modelBuilder.Entity("Simple_Game_Store_WEB_API.Entities.UserLibrary", b =>

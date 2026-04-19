@@ -13,22 +13,6 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "GameDetailsDTO",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    GenreID = table.Column<int>(type: "integer", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameDetailsDTO", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserLibraries",
                 columns: table => new
                 {
@@ -48,27 +32,26 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGame",
+                name: "UserGames",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    LibraryID = table.Column<int>(type: "integer", nullable: false),
                     UserLibraryID = table.Column<int>(type: "integer", nullable: false),
                     GameID = table.Column<int>(type: "integer", nullable: false),
                     PurchasedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGame", x => x.ID);
+                    table.PrimaryKey("PK_UserGames", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserGame_GameDetailsDTO_GameID",
+                        name: "FK_UserGames_Games_GameID",
                         column: x => x.GameID,
-                        principalTable: "GameDetailsDTO",
+                        principalTable: "Games",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserGame_UserLibraries_UserLibraryID",
+                        name: "FK_UserGames_UserLibraries_UserLibraryID",
                         column: x => x.UserLibraryID,
                         principalTable: "UserLibraries",
                         principalColumn: "ID",
@@ -76,13 +59,13 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGame_GameID",
-                table: "UserGame",
+                name: "IX_UserGames_GameID",
+                table: "UserGames",
                 column: "GameID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGame_UserLibraryID",
-                table: "UserGame",
+                name: "IX_UserGames_UserLibraryID",
+                table: "UserGames",
                 column: "UserLibraryID");
 
             migrationBuilder.CreateIndex(
@@ -96,10 +79,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserGame");
-
-            migrationBuilder.DropTable(
-                name: "GameDetailsDTO");
+                name: "UserGames");
 
             migrationBuilder.DropTable(
                 name: "UserLibraries");
