@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using FluentValidation;
 using System.Text;
+using Simple_Game_Store_WEB_API.Services.UserLibrary;
 
 namespace Simple_Game_Store_WEB_API
 {
@@ -43,13 +44,14 @@ namespace Simple_Game_Store_WEB_API
             builder.Services.AddScoped<IGenresMapper, GenresMapper>(); // Register GenreMapper Service, Scoped Lifetime
             builder.Services.AddScoped<IUsersMapper, UsersMapper>(); // Register UserMapper Service, Scoped Lifetime
 
+
+            builder.Services.AddScoped<IGamesService, GamesService>(); // Register GamesService, Scoped Lifetime
+            builder.Services.AddScoped<IGenreService, GenreService>(); // Register GenreService, Scoped Lifetime
+            builder.Services.AddScoped<IUserService, UsersService>(); // Register UserService, Scoped Lifetime
             builder.Services.AddScoped<IAuthService, AuthService>(); // Register AuthService, Scoped Lifetime
             builder.Services.AddScoped<ITokenService, TokenService>(); // Register TokenService, Scoped Lifetime
 
             builder.Services.AddScoped<IValueHasher, Argon2Hasher>(); // Register Argon2Hasher, Scoped Lifetime
-
-            builder.Services.AddScoped<IGamesService, GamesService>(); // Register GamesService, Scoped Lifetime
-            builder.Services.AddScoped<IGenreService, GenreService>(); // Register GenreService, Scoped Lifetime
 
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Add Authentication Services With JWT Bearer Scheme

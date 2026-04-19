@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Simple_Game_Store_WEB_API.Common.Results;
 using Simple_Game_Store_WEB_API.Data;
 using Simple_Game_Store_WEB_API.DTOs.Users;
 using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Mappers;
+using Simple_Game_Store_WEB_API.Services.UserLibrary;
 using Simple_Game_Store_WEB_API.Services.Users;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
@@ -31,20 +33,40 @@ namespace Simple_Game_Store_WEB_API.Endpoints
 
                 var userLibrary = await dbContext.UserLibraries
                     .AsNoTracking()
-                    .Where(ul => ul.UserID == userID)
+                    .Include(ul => ul.Games)
+                        .ThenInclude(g => g.Game)
                     .FirstOrDefaultAsync(ul => ul.UserID == userID);
 
-                List<UserGameDTO> games = userLibrary!.Games.Select(ug => usersMapper.ToDTO(ug)).ToList();
+                if (userLibrary is null)
+                    return Results.Ok(new List<UserGameDTO>());
+
+                List<UserGameDTO> games = userLibrary.Games.Select(ug => usersMapper.ToDTO(ug)).ToList();
 
                 return Results.Ok(games);
             }).RequireAuthorization();
 
             // Add A Game To The Current User's Library
-            usersGroup.MapPost("/{userID}/AddGameToLibrary", async (int userID, int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
+            usersGroup.MapPost("/{userID}/AddGameToUserLibrary", async (int userID, int gameID, IUserService userService, HttpContext httpContext) =>
             {
+                if(userID != int.Parse(httpContext.User.FindFirst("userID")?.Value ?? "0"))
+                    return Results.Forbid();
 
+                Result result = await userService.AddGameToUserLibraryAsync(userID, gameID);
 
-                return Results.Ok("Plaseholder");
+                if(result.IsFailure)
+                {
+                    return result.Error.Code switch
+                    {
+                        "UserNotFound" => Results.NotFound(result.Error.Description),
+                        "GameNotFound" => Results.NotFound(result.Error.Description),
+                        "GameAlreadyInLibrary" => Results.BadRequest(result.Error.Description),
+
+                        _ => Results.BadRequest("An Unknown Error Occurred While Adding The Game To The User's Library")
+                    };
+                }
+
+                return Results.Ok();
+                    
             }).RequireAuthorization();
 
             // Remove A Game From The Current User's Library

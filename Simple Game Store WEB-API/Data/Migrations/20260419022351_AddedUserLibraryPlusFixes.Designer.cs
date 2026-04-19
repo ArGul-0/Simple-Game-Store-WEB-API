@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Simple_Game_Store_WEB_API.Data;
@@ -11,9 +12,11 @@ using Simple_Game_Store_WEB_API.Data;
 namespace Simple_Game_Store_WEB_API.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    partial class GameStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20260419022351_AddedUserLibraryPlusFixes")]
+    partial class AddedUserLibraryPlusFixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,6 +216,9 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
                     b.Property<int>("GameID")
                         .HasColumnType("integer");
 
+                    b.Property<int>("LibraryID")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("PurchasedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -225,7 +231,7 @@ namespace Simple_Game_Store_WEB_API.Data.Migrations
 
                     b.HasIndex("UserLibraryID");
 
-                    b.ToTable("UserGames");
+                    b.ToTable("UserGame");
                 });
 
             modelBuilder.Entity("Simple_Game_Store_WEB_API.Entities.UserLibrary", b =>

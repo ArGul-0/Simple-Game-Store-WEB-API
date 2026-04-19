@@ -5,10 +5,17 @@ namespace Simple_Game_Store_WEB_API.Mappers
 {
     public class UsersMapper : IUsersMapper
     {
+        private readonly IGamesMapper gamesMapper;
+
+        public UsersMapper(IGamesMapper gamesMapper)
+        {
+            this.gamesMapper = gamesMapper;
+        }
+
         public UserGameDTO ToDTO(UserGame userGame)
         {
             return new UserGameDTO(
-                Game: userGame.Game,
+                Game: gamesMapper.ToDetailsDTO(userGame.Game),
                 PurchasedAt: userGame.PurchasedAt
                 );
         }

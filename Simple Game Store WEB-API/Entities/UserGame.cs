@@ -6,11 +6,14 @@ namespace Simple_Game_Store_WEB_API.Entities
     {
         public int ID { get; set; }
 
-        public int LibraryID { get; set; }
+        // FK to UserLibrary
+        public int UserLibraryID { get; set; }
         public UserLibrary UserLibrary { get; set; } = null!;
 
-        public required GameDetailsDTO Game { get; set; }
+        // Reference to Game entity (store GameId and navigation)
+        public int GameID { get; set; }
+        public Game Game { get; set; } = null!;
 
-        public required DateTime PurchasedAt { get; set; }
+        public DateTime PurchasedAt { get; set; }
     }
 }
