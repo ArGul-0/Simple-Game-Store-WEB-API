@@ -16,6 +16,16 @@ namespace Simple_Game_Store_WEB_API.Endpoints
         const string AddGameToUserLibraryEndpointName = "AddGameToUserLibrary"; // Constant For The Add Game To User Library Endpoint Name
         const string RemoveGameFromUserLibraryEndpointName = "RemoveGameFromUserLibrary"; // Constant For The Remove Game From User Library Endpoint Name
 
+        /// <summary>
+        /// Maps The Users Endpoints To The Web Application
+        /// </summary>
+        /// <remarks>
+        /// This Method Sets Up The Following Endpoints Under The /Users Route:
+        /// - GET /Users/GetMyID: Retrieve The Current User's ID
+        /// - GET /Users/{userID}/GetGamesFromLibrary: Retrieve All Games From A User's Library
+        /// - POST /Users/{userID}/AddGameToUserLibrary: Add A Game To A User's Library
+        /// - DELETE /Users/{userID}/RemoveGameFromUserLibrary: Remove A Game From A User's Library
+        /// </remarks>
         public static RouteGroupBuilder MapUsersEndpoints(this WebApplication app)
         {
             var usersGroup = app.MapGroup("/Users/"); // Create A Group For /Users Endpoints
