@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple_Game_Store_WEB_API.Data;
-using Simple_Game_Store_WEB_API.DTOs;
 using Simple_Game_Store_WEB_API.DTOs.Users;
 using Simple_Game_Store_WEB_API.Entities;
 using Simple_Game_Store_WEB_API.Mappers;
+using Simple_Game_Store_WEB_API.Services.Users;
 
 namespace Simple_Game_Store_WEB_API.Endpoints
 {
@@ -27,7 +27,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
                 User? user = await dbContext.Users.FindAsync(userID);
 
                 if (user is null)
-                    return Results.NotFound("User not found");
+                    return Results.NotFound(UsersErrors.UserNotFound.Description);
 
                 var userLibrary = await dbContext.UserLibraries
                     .AsNoTracking()
@@ -42,6 +42,7 @@ namespace Simple_Game_Store_WEB_API.Endpoints
             // Add A Game To The Current User's Library
             usersGroup.MapPost("/{userID}/AddGameToLibrary", async (int userID, int gameID, GameStoreContext dbContext, HttpContext httpContext) =>
             {
+
 
                 return Results.Ok("Plaseholder");
             }).RequireAuthorization();
